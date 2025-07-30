@@ -1,10 +1,21 @@
 * {
     margin: 0;
     padding: 0;
+    user-select: none;
+    font-family: poppins, sans-serif;
+
+    img {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-drag: none;
+        -webkit-touch-callout: none;
+    }
 }
 
 :root {
-    --primary-color: rgb(250, 250, 250);
+    --primary-color: rgb(255, 38, 5);
+    --secondary-color-light: rgb(255, 240, 238);
+    --secondary-color-dark: rgb(255, 150, 134);
+    --background-color: rgb(250, 250, 250);
 }
 
 
@@ -23,7 +34,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--primary-color);
+    background-color: var(--background-color);
     /* Semi-transparent white background */
     display: flex;
     flex-direction: column;
@@ -89,13 +100,24 @@
 
 
 body {
-    font-family: poppins, sans-serif;
+
     width: 100%;
     box-sizing: border-box;
-    overflow: scroll;
-    background-color: var(--primary-color);
+    background-color: var(--background-color);
 
-    user-select: none;
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .active {
+        filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%);
+    }
+}
+
+
+.hideScroll {
+    overflow: scroll;
 
     &::-webkit-scrollbar {
         display: none;
@@ -104,31 +126,26 @@ body {
         scrollbar-width: none;
         scroll-behavior: smooth;
     }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .active {
-        filter: brightness(0);
-    }
-}
-
-.header {
-    position: relative;
-    top: 20px;
-    left: 20px;
-    width: 100%;
-    font-size: 35px;
-    font-weight: 600;
-    display: inline;
 }
 
 
 
+/* add universal left/right spacing */
+.universalSpace {
+    display: flex;
+    flex-direction: column;
+
+    .universalContentSpace {
+        margin-top: 20px;
+        align-self: center;
+        width: calc(97% - 40px);
+    }
+}
 
 
+.red {
+    filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%);
+}
 
 
 
@@ -147,14 +164,14 @@ body {
     left: 0;
     width: 100%;
     height: 75px;
-    background-color: var(--primary-color);
+    background-color: var(--background-color);
     display: flex;
     justify-content: space-around;
     align-items: center;
     z-index: 1000;
 
     &>*:hover {
-        filter: brightness(0);
+        filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%);
     }
 
     a,
@@ -188,18 +205,30 @@ body {
 /* Styles for dark theme */
 @media (prefers-color-scheme: dark) {
     :root {
-        --primary-color: rgb(12, 12, 12);
+        --background-color: rgb(12, 12, 12);
+    }
+
+    heading {
+        color: black;
     }
 
     body {
         color: white;
-
-        .active {
-            filter: brightness(100);
-        }
     }
 
     .footerMenu>*:hover {
         filter: brightness(100) !important;
+        filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%) !important;
     }
+
+    .notification {
+        img {
+            filter: brightness(1) !important;
+        }
+    }
+    #search-bar input, .searchLogo, .filter {
+        background-color: var(--secondary-color-dark) !important;
+        color: white;
+    }
+    
 }
