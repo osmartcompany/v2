@@ -12,10 +12,6 @@ function changeContent(Menu, Section) {
         document.querySelector(`.${Menu}Menu`).classList.toggle('hidden');
         let upperCase = Menu.charAt(0).toUpperCase() + Menu.replace(Menu.charAt(0), '')
         document.title = `oSmart | ${upperCase}`
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
     } else {
         // hide the current section
         document.querySelector(`.${currentMenu}-${currentSection}-contents`).classList.toggle('hidden');
@@ -44,4 +40,51 @@ function delayedRedirect(link) {
 window.addEventListener('load', function () {
     const loadingScreen = document.getElementById('loading-screen');
     loadingScreen.style.display = 'none';  // Hide the loading screen
+});
+
+
+const searchLogo = document.querySelector('.searchLogo');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const searchToggle = document.getElementById("search-toggle");
+const searchBar = document.getElementById("search-bar");
+const searchInput = document.getElementById("search-input");
+
+
+function restoreSearch() {
+    setTimeout(() => {
+        if (searchInput.value.trim() === "") {
+            searchMode = false;
+            searchBar.classList.add("hidden");
+            searchToggle.classList.remove("hidden");
+            shelvesEl.innerHTML = "";
+            shelfIndex = 0;
+            loadNextShelf();
+            checkIfMoreShelvesNeeded();
+        }
+    }, 150);
+}
+
+
+
+
+
+// Na wanjae
+window.addEventListener('beforeunload', function (event) {
+    // Prompt the user before leaving the page
+    event.preventDefault();
+    // event.defaultPrevented
+    event.returnValue = ''; // Required for some browsers
 });
