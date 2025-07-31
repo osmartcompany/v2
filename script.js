@@ -88,3 +88,58 @@ window.addEventListener('beforeunload', function (event) {
     // event.defaultPrevented
     event.returnValue = ''; // Required for some browsers
 });
+
+
+
+
+
+
+// scroll to the nth offer card when the nth radio button is clicked
+const offerRadioButtons = document.getElementsByName('offer');
+document.querySelector(".specialOfferCards").scrollTo({
+    left: 0,
+    behavior: 'smooth'
+});
+
+setInterval(() => {
+    const checkedRadio = document.querySelector(".offerRadio:checked");
+    if (checkedRadio) {
+        const nextRadio = checkedRadio.nextElementSibling;
+        if (nextRadio) {
+            nextRadio.checked = true;
+        } else {
+            document.querySelector(".offerRadio").checked = true;
+        }
+    }
+    
+    offerRadioButtons.forEach((radioButton, index) => {
+        if (radioButton.checked == true) {
+            const card = document.querySelector(".specialOfferCards .offerCard");
+            const cardWidth = card.offsetWidth;
+            const cardStyle = getComputedStyle(card);
+            const cardMargin = parseInt(cardStyle.marginRight) || 0;
+            document.querySelector(".specialOfferCards").scrollTo({
+                left: index * (cardWidth + cardMargin + 20),
+                behavior: 'smooth'
+            });
+        }
+    });
+}, 3000);
+
+
+
+offerRadioButtons.forEach((radioButton, index) => {
+    radioButton.addEventListener('click', () => {
+        if (radioButton.checked == true) {
+            const card = document.querySelector(".specialOfferCards .offerCard");
+            const cardWidth = card.offsetWidth;
+            const cardStyle = getComputedStyle(card);
+            const cardMargin = parseInt(cardStyle.marginRight) || 0;
+            document.querySelector(".specialOfferCards").scrollTo({
+                left: index * (cardWidth + cardMargin + 20),
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
