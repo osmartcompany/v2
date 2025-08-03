@@ -7,6 +7,10 @@
     <title>oSmart | Home</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="services.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 </head>
 
 <body>
@@ -17,7 +21,7 @@
     </div>
 
     <!-- Home -->
-    <div class="homeMenu hideScroll">
+    <div class="homeMenu">
         <!-- Home Main -->
         <section class="home-main-contents universalSpace">
             <!-- Heading -->
@@ -124,7 +128,7 @@
         <!-- Home Content Redirect1 -->
         <section class="home-content1-contents universalSpace hidden">
             <!-- Heading -->
-            <div class="header">Home 2</div>
+            <div class="headTitle">Home 2</div>
             <!-- Heading -->
             <!-- Container -->
             <div class="container">
@@ -162,7 +166,7 @@
             <!-- Container -->
         </section>
         <!-- Home Content Redirect1 -->
-         
+
         <!-- Separator -->
         <div class="separator"></div>
         <!-- Separator -->
@@ -173,7 +177,7 @@
     <div class="servicesMenu hidden">
         <section class="services-main-contents universalSpace">
             <!-- Heading -->
-            <div class="header">Services</div>
+            <div class="headTitle">Services</div>
             <!-- Heading -->
 
             <!-- Description -->
@@ -181,9 +185,236 @@
             <!-- Description -->
 
             <!-- Container -->
-            <div class="universalContentSpace"></div>
+            <div class="serviceContent universalContentSpace">
+                <div class="serviceCards">
+                    <div onclick="changeContent('services','selectUniversity')" class="service service1">card1</div>
+                    <div onclick="changeContent('services','selectUniversity')" class="service service2">card2</div>
+                    <div onclick="changeContent('services','selectUniversity')" class="service service3">card3</div>
+                    <div onclick="changeContent('services','selectUniversity')" class="service service4">card4</div>
+                </div>
+            </div>
             <!-- Container -->
         </section>
+
+        <!-- Select University -->
+        <section class="services-selectUniversity-contents universalSpace hidden">
+            <!-- Heading -->
+            <div class="headTitle">Order Certificate</div>
+            <!-- Heading -->
+
+            <!-- Select Certificate Content -->
+            <div class="selectCertificateContent universalContentSpace">
+                <div class="categoryHeader">
+                    <span>Select University</span>
+                </div>
+                <div class="selectUniversity">
+                    <div class="activeOutline">
+                        <div onclick="selectUniversity('BISEH')" class="universityContent">
+                            <div class="universityImage">
+                                <img src="assets 2/biseh.png" alt="BISEH">
+                            </div>
+                            <div class="universityName">
+                                Board Hyderabad
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activeOutline">
+                        <div onclick="selectUniversity('BISES')" class="universityContent">
+                            <div class="universityImage">
+                                <img src="assets 2/bises.png" alt="BISES">
+                            </div>
+                            <div class="universityName">
+                                Board Sukkur
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activeOutline">
+                        <div onclick="selectUniversity('BISEK')" class="universityContent">
+                            <div class="universityImage">
+                                <img src="assets 2/bisek.png" alt="BISEK">
+                            </div>
+                            <div class="universityName">
+                                Board Karachi
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activeOutline">
+                        <div onclick="selectUniversity('BISEL')" class="universityContent">
+                            <div class="universityImage">
+                                <img src="assets 2/bisel.png" alt="BISEL">
+                            </div>
+                            <div class="universityName">
+                                Board Larkana
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activeOutline">
+                        <div onclick="selectUniversity('BISEN')" class="universityContent">
+                            <div class="universityImage">
+                                <img src="assets 2/bisen.png" alt="BISEN">
+                            </div>
+                            <div class="universityName">
+                                Board Nawabshah
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Select Certificate Content -->
+        </section>
+        <!-- Select University -->
+
+        <!-- Select Board Service -->
+        <section class="services-selectBoardService-contents universalSpace hidden">
+            <!-- Heading -->
+            <div class="headTitle">Select Board Service</div>
+            <!-- Heading -->
+
+            <!-- Container -->
+            <div class="boardServiceContent universalContentSpace">
+                <div class="boardServiceOption">
+                    <span>Marks Certificate</span>
+                    <span class="boardServicePrice" id="price-Marks_Certificate"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Pass Certificate</span>
+                    <span class="boardServicePrice" id="price-Pass_Certificate"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Pakka Certificate</span>
+                    <span class="boardServicePrice" id="price-Pakka_Certificate"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Duplicate Pakka Certificate</span>
+                    <span class="boardServicePrice" id="price-Duplicate_Pakka_Certificate"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Migration</span>
+                    <span class="boardServicePrice" id="price-Migration"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Eligibility</span>
+                    <span class="boardServicePrice" id="price-Eligibility"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Affiliation</span>
+                    <span class="boardServicePrice" id="price-Affiliation"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Recounting per Paper</span>
+                    <span class="boardServicePrice" id="price-Recounting_per_Paper"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Improvement of Grade</span>
+                    <span class="boardServicePrice" id="price-Improvement_of_Grade"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Correction</span>
+                    <span class="boardServicePrice" id="price-Correction"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Date of Birth Certificate</span>
+                    <span class="boardServicePrice" id="price-DOB_Certificate"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Certification Verification</span>
+                    <span class="boardServicePrice" id="price-Certificate_Verification"></span>
+                </div>
+                <div class="boardServiceOption">
+                    <span>Change of Institute (T.C.)</span>
+                    <span class="boardServicePrice" id="price-TC"></span>
+                </div>
+            </div>
+            <!-- Container -->
+        </section>
+        <!-- Select Board Service -->
+
+        <!-- Order Board Service -->
+        <section class="services-boardServiceOrder-contents hidden universalSpace">
+            <div class="headTitle">Order Board Service</div>
+            <div class="boardServiceOrderContent universalContentSpace">
+                <!-- Product Info -->
+                <div class="boardOrderDetails">
+                    <div class="boardOrderDetailsContent">
+                        <img id="product-image" src="" alt="Product" />
+                        <div>
+                            <h2 id="product-name"></h2>
+                            <p id="product-category"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Form -->
+                <form id="order-form">
+                    <input type="hidden" name="productid" id="productid-input" />
+
+                    <div>
+                        <label for="customer" class="formLabel">Full Name</label>
+                        <input type="text" id="customer" name="customer" required placeholder="e.g. Hassan Soomro" />
+                    </div>
+
+                    <div>
+                        <label for="seat_number" class="formLabel">Roll No.</label>
+                        <input type="number" id="seat_number" name="seat_number" required placeholder="1234567" />
+                    </div>
+
+                    <div>
+                        <label for="class-name" class="formLabel">Class Name</label>
+                        <select name="class-name" id="class-name" required>
+                            <option value="">Select Class</option>
+                            <option value="SSC-I (Class 9)">SSC-I (Class 9)</option>
+                            <option value="SSC-II (Class 10)">SSC-II (Class 10)</option>
+                            <option value="HSC-I (Class 11)">HSC-I (Class 11)</option>
+                            <option value="HSC-II (Class 12)">HSC-II (Class 12)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="record_year" class="formLabel">Record Year</label>
+                        <input type="number" id="record_year" name="record_year" min="1965" max="2099" required />
+                    </div>
+
+                    <div>
+                        <label for="group-select" class="formLabel">Group</label>
+                        <select name="group-select" id="group-select" required>
+                            <option value="">Select Group</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="phone" class="formLabel">Phone Number</label>
+                        <input type="number" id="phone" name="phone" required placeholder="e.g. 03123456789" />
+                    </div>
+
+                    <div class="deliveryAddress">
+                        <label for="district">Delivery Address</label>
+                        <input type="text" id="district" name="district" placeholder="District" required />
+                        <input type="text" name="city" placeholder="City" required />
+                        <input type="text" name="area" placeholder="Area" required />
+                        <input type="text" name="address" placeholder="Full Address" required />
+                    </div>
+                </form>
+            </div>
+
+            <!-- Ribbon -->
+            <div class="orderRibbon">
+                <div id="price-display">Loading price...</div>
+                <button id="pay-button" class="disablePayButton" disabled>Pay</button>
+            </div>
+
+            <!-- Processing Overlay -->
+            <div id="overlay" class="hidden orderOverlay">
+                <div id="overlay-box" class="orderOverlayBox">
+                    <img src="assets 2/loading.gif" alt="Loading" />
+                    <p id="overlay-text">Processing...</p>
+                    <div id="overlay-actions" class="hidden">
+                        <span onclick="location.reload()" class="retry">Retry</span>
+                        <span onclick="changeContent('home','main')" class="toHome">Back to Home</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Order Board Service -->
     </div>
     <!-- Services -->
 
@@ -191,7 +422,7 @@
     <div class="activityMenu hidden">
         <section class="activity-main-contents universalSpace">
             <!-- Heading -->
-            <div class="header">Activity</div>
+            <div class="headTitle">Activity</div>
             <!-- Heading -->
 
             <!-- Container -->
@@ -205,7 +436,7 @@
     <div class="settingsMenu hidden">
         <section class="settings-main-contents universalSpace">
             <!-- Heading -->
-            <div class="header">Settings</div>
+            <div class="headTitle">Settings</div>
             <!-- Heading -->
             <!-- Container -->
             <div class="universalContentSpace"></div>
