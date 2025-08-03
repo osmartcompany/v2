@@ -11,6 +11,21 @@
         -webkit-user-drag: none;
         -webkit-touch-callout: none;
     }
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        /* display: none;
+        width: 0px;
+        background: transparent; */
+        scrollbar-width: none;
+        /* scroll-behavior: smooth; */
+    }
+
+    .hidden {
+        display: none;
+    }
 }
 
 :root {
@@ -20,6 +35,11 @@
     --background-color: rgb(250, 250, 250);
 }
 
+.headTitle {
+    margin: 25px auto 0 20px;
+    font-size: 35px;
+    font-weight: 600;
+}
 
 .poppins-thin {
     font-family: "Poppins", sans-serif;
@@ -144,6 +164,7 @@
 
 
 
+
 /* Loader CSS */
 #loading-screen {
     position: fixed;
@@ -221,6 +242,7 @@ body {
     width: 100%;
     box-sizing: border-box;
     background-color: var(--background-color);
+    color: black;
 
     a {
         text-decoration: none;
@@ -229,19 +251,6 @@ body {
 
     .active {
         filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%);
-    }
-}
-
-
-.hideScroll {
-    overflow: scroll;
-
-    &::-webkit-scrollbar {
-        display: none;
-        width: 0px;
-        background: transparent;
-        scrollbar-width: none;
-        scroll-behavior: smooth;
     }
 }
 
@@ -263,7 +272,6 @@ body {
 .red {
     filter: invert(19%) sepia(88%) saturate(7486%) hue-rotate(358deg) brightness(99%) contrast(101%);
 }
-
 
 
 .hidden {
