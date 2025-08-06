@@ -23,19 +23,19 @@
     <!-- Home -->
     <div class="homeMenu">
         <!-- Home Main -->
-        <section class="home-main-contents universalSpace">
+        <section class="home-main universalSpace">
             <!-- Heading -->
             <div class="header">
                 <div class="headerRow1">
                     <div class="heading">Home</div>
                     <div class="notification">
-                        <img src="assets/notification.png" alt="Logo">
+                        <div class="red"><img class="red" src="assets/notification.png" alt="Logo"></div>
                     </div>
                 </div>
                 <div class="headerRow2">
                     <div id="search-bar">
                         <span class="searchLogo"><img src="assets 2/search.png" /></span>
-                        <input id="search-input" type="text" placeholder="Search" oninput="" onblur="restoreSearch()" />
+                        <input id="search-input" type="text" placeholder="Search" oninput="" onblur="" />
                     </div>
                     <span class="filter">
                         <img src="assets/filter.png" alt="Filter Icon" />
@@ -126,7 +126,7 @@
         <!-- Home Main -->
 
         <!-- Home Content Redirect1 -->
-        <section class="home-content1-contents universalSpace hidden">
+        <section class="home-content1 universalSpace hidden">
             <!-- Heading -->
             <div class="headTitle">Home 2</div>
             <!-- Heading -->
@@ -175,7 +175,7 @@
 
     <!-- Services -->
     <div class="servicesMenu hidden">
-        <section class="services-main-contents universalSpace">
+        <section class="services-main universalSpace">
             <!-- Heading -->
             <div class="headTitle">Services</div>
             <!-- Heading -->
@@ -187,17 +187,17 @@
             <!-- Container -->
             <div class="serviceContent universalContentSpace">
                 <div class="serviceCards">
-                    <div onclick="changeContent('services','selectUniversity')" class="service service1">card1</div>
-                    <div onclick="changeContent('services','selectUniversity')" class="service service2">card2</div>
-                    <div onclick="changeContent('services','selectUniversity')" class="service service3">card3</div>
-                    <div onclick="changeContent('services','selectUniversity')" class="service service4">card4</div>
+                    <div onclick="changeContent('','selectUniversity')" class="service service1">card1</div>
+                    <div onclick="changeContent('','selectUniversity')" class="service service2">card2</div>
+                    <div onclick="changeContent('','selectUniversity')" class="service service3">card3</div>
+                    <div onclick="changeContent('','selectUniversity')" class="service service4">card4</div>
                 </div>
             </div>
             <!-- Container -->
         </section>
 
         <!-- Select University -->
-        <section class="services-selectUniversity-contents universalSpace hidden">
+        <section class="services-selectUniversity universalSpace hidden">
             <!-- Heading -->
             <div class="headTitle">Order Certificate</div>
             <!-- Heading -->
@@ -254,7 +254,7 @@
                                 <img src="assets 2/bisen.png" alt="BISEN">
                             </div>
                             <div class="universityName">
-                                Board Nawabshah
+                                Board Shaheed Benazirabad
                             </div>
                         </div>
                     </div>
@@ -265,7 +265,7 @@
         <!-- Select University -->
 
         <!-- Select Board Service -->
-        <section class="services-selectBoardService-contents universalSpace hidden">
+        <section class="services-selectBoardService universalSpace hidden">
             <!-- Heading -->
             <div class="headTitle">Select Board Service</div>
             <!-- Heading -->
@@ -330,7 +330,7 @@
         <!-- Select Board Service -->
 
         <!-- Order Board Service -->
-        <section class="services-boardServiceOrder-contents hidden universalSpace">
+        <section class="services-boardServiceOrder hidden universalSpace">
             <div class="headTitle">Order Board Service</div>
             <div class="boardServiceOrderContent universalContentSpace">
                 <!-- Product Info -->
@@ -348,50 +348,73 @@
                 <form id="order-form">
                     <input type="hidden" name="productid" id="productid-input" />
 
-                    <div>
-                        <label for="customer" class="formLabel">Full Name</label>
-                        <input type="text" id="customer" name="customer" required placeholder="e.g. Hassan Soomro" />
+                    <h2>Personal Info</h2>
+                    <div class="inputField">
+                        <input type="text" id="customer" class="form_input" name="customer" placeholder=" " required />
+                        <label for="customer" class="formLabel inputLabel">Full Name</label>
                     </div>
 
-                    <div>
-                        <label for="seat_number" class="formLabel">Roll No.</label>
-                        <input type="number" id="seat_number" name="seat_number" required placeholder="1234567" />
+
+                    <div class="wrapper">
+                        <div class="inputField">
+                            <select name="class-name" class="formSelect" id="class-name" required>
+                                <option value="default"></option>
+                                <option value="SSC-I (Class 9)">SSC-I (Class 9)</option>
+                                <option value="SSC-II (Class 10)">SSC-II (Class 10)</option>
+                                <option value="HSC-I (Class 11)">HSC-I (Class 11)</option>
+                                <option value="HSC-II (Class 12)">HSC-II (Class 12)</option>
+                            </select>
+                            <label for="class-name" class="formLabel selectLabel">Class</label>
+                        </div>
+
+                        <div class="inputField">
+                            <select name="group-select" class="formSelect" id="group-select" required>
+                                <option value="default"></option>
+                                <option value="">Select Class First</option>
+                            </select>
+                            <label for="group-select" class="formLabel selectLabel">Group</label>
+                        </div>
                     </div>
 
-                    <div>
-                        <label for="class-name" class="formLabel">Class Name</label>
-                        <select name="class-name" id="class-name" required>
-                            <option value="">Select Class</option>
-                            <option value="SSC-I (Class 9)">SSC-I (Class 9)</option>
-                            <option value="SSC-II (Class 10)">SSC-II (Class 10)</option>
-                            <option value="HSC-I (Class 11)">HSC-I (Class 11)</option>
-                            <option value="HSC-II (Class 12)">HSC-II (Class 12)</option>
-                        </select>
+                    <div class="wrapper">
+                        <div class="inputField">
+                            <input type="number" id="seat_number" class="form_input" name="seat_number" placeholder=" "
+                                required />
+                            <label for="seat_number" class="formLabel inputLabel">Roll No.</label>
+                        </div>
+
+                        <div class="inputField">
+                            <input type="number" id="record_year" class="form_input" placeholder=" " name="record_year"
+                                min="2000" max="2099" required />
+                            <label for="record_year" class="formLabel inputLabel">Record Year</label>
+                        </div>
                     </div>
 
-                    <div>
-                        <label for="record_year" class="formLabel">Record Year</label>
-                        <input type="number" id="record_year" name="record_year" min="1965" max="2099" required />
+
+                    <div class="inputField">
+                        <input type="number" id="phone" class="form_input" placeholder=" " name="phone" required />
+                        <label for="phone" class="formLabel inputLabel">Phone Number</label>
                     </div>
 
-                    <div>
-                        <label for="group-select" class="formLabel">Group</label>
-                        <select name="group-select" id="group-select" required>
-                            <option value="">Select Group</option>
-                        </select>
+                    <h2>Delivery Address</h2>
+                    <div class="wrapper">
+                        <div class="inputField">
+                            <input type="text" id="district" class="form_input" name="district" placeholder=" "
+                                required />
+                            <label for="district" class="formLabel inputLabel">District</label>
+                        </div>
+                        <div class="inputField">
+                            <input type="text" id="city" class="form_input" name="city" placeholder=" " required />
+                            <label for="city" class="formLabel inputLabel">City</label>
+                        </div>
                     </div>
-
-                    <div>
-                        <label for="phone" class="formLabel">Phone Number</label>
-                        <input type="number" id="phone" name="phone" required placeholder="e.g. 03123456789" />
+                    <div class="inputField">
+                        <input type="text" id="area" class="form_input" name="area" placeholder=" " required />
+                        <label for="area" class="formLabel inputLabel">Area</label>
                     </div>
-
-                    <div class="deliveryAddress">
-                        <label for="district">Delivery Address</label>
-                        <input type="text" id="district" name="district" placeholder="District" required />
-                        <input type="text" name="city" placeholder="City" required />
-                        <input type="text" name="area" placeholder="Area" required />
-                        <input type="text" name="address" placeholder="Full Address" required />
+                    <div class="inputField">
+                        <input type="text" id="address" class="form_input" name="address" placeholder=" " required />
+                        <label for="address" class="formLabel inputLabel">Full Address</label>
                     </div>
                 </form>
             </div>
@@ -399,7 +422,7 @@
             <!-- Ribbon -->
             <div class="orderRibbon">
                 <div id="price-display">Loading price...</div>
-                <button id="pay-button" class="disablePayButton" disabled>Pay</button>
+                <button id="pay-button" class="" disabled>Pay</button>
             </div>
 
             <!-- Processing Overlay -->
@@ -420,7 +443,7 @@
 
     <!-- Activity -->
     <div class="activityMenu hidden">
-        <section class="activity-main-contents universalSpace">
+        <section class="activity-main universalSpace">
             <!-- Heading -->
             <div class="headTitle">Activity</div>
             <!-- Heading -->
@@ -434,7 +457,7 @@
 
     <!-- Settings -->
     <div class="settingsMenu hidden">
-        <section class="settings-main-contents universalSpace">
+        <section class="settings-main universalSpace">
             <!-- Heading -->
             <div class="headTitle">Settings</div>
             <!-- Heading -->
@@ -452,19 +475,19 @@
 
     <!-- FooterMenu -->
     <div class="footerMenu">
-        <div onclick="changeContent('home','main')" class="home active">
+        <div onclick="changeMenu('home')" class="home active">
             <img src="assets/home.png" alt="Home Icon">
             <div>Home</div>
         </div>
-        <div onclick="changeContent('services','main')" class="services">
+        <div onclick="changeMenu('services')" class="services">
             <img class="categoryImage" src="assets/9grid.png" alt="Service Icon">
             <div>Services</div>
         </div>
-        <div onclick="changeContent('activity','main')" class="activity">
+        <div onclick="changeMenu('activity')" class="activity">
             <img src="assets/activity.png" alt="Activity Icon">
             <div>Activity</div>
         </div>
-        <div onclick="changeContent('settings','main')" class="settings">
+        <div onclick="changeMenu('settings')" class="settings">
             <img src="assets/user.png" alt="User Icon">
             <div>Settings</div>
         </div>
