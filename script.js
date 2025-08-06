@@ -7,37 +7,39 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 let currentMenu = 'home';
-let currentSection = 'main';
-let pastSection = 'main';
-function changeContent(Menu, Section) {
-    if (currentMenu != Menu) {
-        // hide whole current Menu
-        document.querySelector(`.${currentMenu}`).classList.toggle('active');
-        document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden');
-        [currentSection, pastSection] = [pastSection, currentSection]; // swap currentSection and pastSection
+// let currentSection = 'main';
+let runningSection = {
+    home: 'main',
+    services: 'main',
+    activity: 'main',
+    settings: 'main'
+}
 
-        //activate the clicked menu
-        currentMenu = Menu;
-        document.querySelector(`.${Menu}`).classList.toggle('active');
-        document.querySelector(`.${Menu}Menu`).classList.toggle('hidden');
+// class='mainSection'
+function changeContent(Menu, Section) {
+    if (Menu !== '') {
+        document.querySelector(`.${currentMenu}`).classList.toggle('active');
+        document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden')
+
+        currentMenu = Menu
+        document.querySelector(`.${currentMenu}`).classList.toggle('active');
+        document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden')
         let upperCase = Menu.charAt(0).toUpperCase() + Menu.replace(Menu.charAt(0), '')
         document.title = `oSmart | ${upperCase}`
-    } else {
-        // hide the current section
-        document.querySelector(`.${currentMenu}-${currentSection}-contents`).classList.toggle('hidden');
-
-        // activate the clicked section
-        currentSection = Section;
-        document.querySelector(`.${currentMenu}-${Section}-contents`).classList.toggle('hidden');
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-
+    }
+    if (Section !== '') {
+        document.querySelector(`.${`${currentMenu}-${runningSection[currentMenu]}`}`).classList.toggle('hidden')
+        runningSection[currentMenu] = Section
+        document.querySelector(`.${`${currentMenu}-${runningSection[currentMenu]}`}`).classList.toggle('hidden')
     }
 }
 
-// if you're in services menu then click on the home menu, then it will redirect you to current section of home menu {reason: if statement will be triggered}, then if you click on the home menu again, it will redirect you to the main section of home menu {reason: else statement will be triggered}
+function changeMenu(Menu) {
+    currentMenu == Menu ? changeContent(Menu, 'main') : changeContent(Menu, '')
+}
+
+
+
 
 
 function delayedRedirect(link) {
@@ -68,24 +70,24 @@ const searchLogo = document.querySelector('.searchLogo');
 
 
 
-const searchToggle = document.getElementById("search-toggle");
-const searchBar = document.getElementById("search-bar");
-const searchInput = document.getElementById("search-input");
+// const searchToggle = document.getElementById("search-toggle");
+// const searchBar = document.getElementById("search-bar");
+// const searchInput = document.getElementById("search-input");
 
 
-function restoreSearch() {
-    setTimeout(() => {
-        if (searchInput.value.trim() === "") {
-            searchMode = false;
-            searchBar.classList.add("hidden");
-            searchToggle.classList.remove("hidden");
-            shelvesEl.innerHTML = "";
-            shelfIndex = 0;
-            loadNextShelf();
-            checkIfMoreShelvesNeeded();
-        }
-    }, 150);
-}
+// function restoreSearch() {
+//     setTimeout(() => {
+//         if (searchInput.value.trim() === "") {
+//             searchMode = false;
+//             searchBar.classList.add("hidden");
+//             searchToggle.classList.remove("hidden");
+//             shelvesEl.innerHTML = "";
+//             shelfIndex = 0;
+//             loadNextShelf();
+//             checkIfMoreShelvesNeeded();
+//         }
+//     }, 150);
+// }
 
 
 
@@ -167,6 +169,7 @@ async function selectUniversity(university) {
         document.querySelectorAll('.boardServicePrice').forEach(e => e.textContent = "Loading...");
         priceLoaded = university;
         changeContent('services', 'selectBoardService');
+        // await blabla()
         await loadServicePrice();
     } else {
         changeContent('services', 'selectBoardService');
@@ -215,28 +218,110 @@ const serviceOptions = [
 ];
 
 
+// async function loadServicePrice() {
+//     for (const serviceOption of serviceOptions) {
+//         try {
+//             const docRef = db.collection("products").doc("certificate").collection(category).doc(serviceOption.replace(/_/g, ' '));
+//             const docSnap = await docRef.get();
+
+//             if (docSnap.exists) {
+//                 const data = docSnap.data();
+//                 const priceEl = document.getElementById("price-" + serviceOption);
+//                 const linkEl = priceEl.parentElement;
+
+//                 priceEl.textContent = `Rs. ${data.selling_price}`;
+//                 linkEl.setAttribute('onclick', `selectBoardService('${data.productid}')`);
+//             } else {
+//                 document.getElementById("price-" + serviceOption).textContent = "Not found";
+//             }
+//         } catch (err) {
+//             console.error("Error fetching serviceOption:", serviceOption, err);
+//             document.getElementById("price-" + serviceOption).textContent = "Error";
+//         }
+//     }
+// }
+
+
+
+
+
+
+
+// async function loadServicePrice() {
+//     for (const serviceOption of serviceOptions) {
+//         try {
+//             const docRef = db.collection("products").doc("certificate").collection(category).doc(serviceOption.replace(/_/g, ' '));
+//             const docSnap = await docRef.get();
+
+//             if (docSnap.exists) {
+//                 const data = docSnap.data();
+//                 const priceEl = document.getElementById("price-" + serviceOption);
+//                 const linkEl = priceEl.parentElement;
+
+//                 priceEl.textContent = `Rs. ${data.selling_price}`;
+//                 linkEl.setAttribute('onclick', `selectBoardService('${data.productid}')`);
+//             } else {
+//                 document.getElementById("price-" + serviceOption).textContent = "Not found";
+//             }
+//         } catch (err) {
+//             console.error("Error fetching serviceOption:", serviceOption, err);
+//             document.getElementById("price-" + serviceOption).textContent = "Error";
+//         }
+//     }
+// }
+
+
+
+
+
 async function loadServicePrice() {
-    for (const serviceOption of serviceOptions) {
-        try {
-            const docRef = db.collection("products").doc("certificate").collection(category).doc(serviceOption.replace(/_/g, ' '));
-            const docSnap = await docRef.get();
+    const docRef = db.collection('products').doc("certificate").collection('list').doc(category);
+    docRef.get().then((doc) => {
+        const data = doc.data();
+        for (const serviceOption of serviceOptions) {
+            try {
+                if (doc.exists) {
+                    const priceEl = document.getElementById("price-" + serviceOption);
+                    const linkEl = priceEl.parentElement;
 
-            if (docSnap.exists) {
-                const data = docSnap.data();
-                const priceEl = document.getElementById("price-" + serviceOption);
-                const linkEl = priceEl.parentElement;
-
-                priceEl.textContent = `Rs. ${data.selling_price}`;
-                linkEl.setAttribute('onclick', `selectBoardService('${data.productid}')`);
-            } else {
-                document.getElementById("price-" + serviceOption).textContent = "Not found";
+                    priceEl.textContent = `Rs. ${data[serviceOption.replace(/_/g, ' ')].selling_price}`;
+                    linkEl.setAttribute('onclick', `selectBoardService('${data[serviceOption.replace(/_/g, ' ')].productid}')`);
+                } else {
+                    document.getElementById("price-" + serviceOption).textContent = "Not found";
+                }
+            } catch{
+                document.getElementById("price-" + serviceOption).textContent = "Error";
             }
-        } catch (err) {
-            console.error("Error fetching serviceOption:", serviceOption, err);
-            document.getElementById("price-" + serviceOption).textContent = "Error";
         }
-    }
+    }).catch((error) => {
+        console.error('Error fetching document:', error);
+    });
 }
+
+// async function blabla() {
+//     // const temp = db.collection('products').doc("certificates").collection('list').doc(category).get()
+//     // const data = temp.data()
+//     // Example: Fetching a document with a field name containing spaces
+//     console.log(category)
+//     const docRef = db.collection('products').doc("certificate").collection('list').doc(category);
+//     docRef.get().then((doc) => {
+//         if (doc.exists) {
+//             const data = doc.data();
+//             console.log(data['Marks Certificate']); // Accessing the field with spaces
+//         } else {
+//             console.log('No such document!');
+//         }
+//     }).catch((error) => {
+//         console.error('Error fetching document:', error);
+//     });
+
+// }
+
+
+
+
+
+
 
 
 
@@ -264,7 +349,7 @@ const groupSelect = document.getElementById("group-select");
 
 classSelect.addEventListener("change", () => {
     const val = classSelect.value;
-    groupSelect.innerHTML = '<option value="">Select Group</option>';
+    groupSelect.innerHTML = '<option value="default"></option>'
     if (val === "SSC-I (Class 9)" || val === "SSC-II (Class 10)") {
         ["Science", "General"].forEach(g => groupSelect.innerHTML += `<option value="${g}">${g}</option>`);
     } else if (val === "HSC-I (Class 11)" || val === "HSC-II (Class 12)") {
@@ -299,12 +384,10 @@ function fillProductUI(product) {
 
 function disablePay() {
     payButton.disabled = true;
-    payButton.classList.add("disablePayButton");
 }
 
 function enablePay() {
     payButton.disabled = false;
-    payButton.classList.remove("disablePayButton");
 }
 
 function validateForm() {
@@ -351,7 +434,7 @@ payButton.addEventListener("click", async () => {
             overlayText.textContent = "Error placing order.";
             overlayActions.classList.remove("hidden");
         }
-    }, 15000);
+    }, 60000);
 
     try {
         await db.collection("orders").doc("new orders").collection("list").doc(orderId).set(orderData);
@@ -391,13 +474,27 @@ document.getElementById('record_year').addEventListener('input', function () {
     const selectedYear = this.value;
     const currentYear = new Date().getFullYear();
     if (selectedYear === '') {
-        this.style.outline = ""; // Remove the highlight
+        this.style.border = ""; // Remove the highlight
     } else if (!(selectedYear <= currentYear && selectedYear > 2000)) {
         // Handle case where selected year is in the past
         this.setCustomValidity("Please select a valid year between 2000 and the current year.");
-        this.style.outline = "2px solid red"; // Highlight the input
+        this.style.border = "2px solid red"; // Highlight the input
     } else {
         // this.setCustomValidity(""); // Clear any custom validity message
-        this.style.outline = ""; // Remove the highlight
+        this.style.border = ""; // Remove the highlight
     }
 })
+
+
+
+const selects = document.querySelectorAll('.formSelect');
+const targetLabels = document.querySelectorAll('.selectLabel');
+selects.forEach((select, index) => {
+    select.addEventListener('change', (event) => {
+        if (event.target.value === 'default') {
+            targetLabels[index].removeAttribute('style')
+        } else {
+            targetLabels[index].setAttribute('style', 'top: -1em; font-size: 0.75em; padding: 0 0.125em;')
+        }
+    })
+});
