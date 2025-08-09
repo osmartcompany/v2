@@ -7,7 +7,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 let currentMenu = 'home';
-// let currentSection = 'main';
+
 let runningSection = {
     home: 'main',
     services: 'main',
@@ -15,8 +15,8 @@ let runningSection = {
     settings: 'main'
 }
 
-// class='mainSection'
-function changeContent(Menu, Section) {
+// navigation function
+function changeContent(Menu, Section = '') {
     if (Menu !== '') {
         document.querySelector(`.${currentMenu}`).classList.toggle('active');
         document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden')
@@ -34,8 +34,9 @@ function changeContent(Menu, Section) {
     }
 }
 
+// click on menu when on same menu to navigate to its main section
 function changeMenu(Menu) {
-    currentMenu == Menu ? changeContent(Menu, 'main') : changeContent(Menu, '')
+    currentMenu == Menu ? changeContent(Menu, 'main') : changeContent(Menu)
 }
 
 
@@ -136,7 +137,7 @@ setInterval(() => {
             });
         }
     });
-}, 3000);
+}, 5000);
 
 
 
@@ -168,11 +169,11 @@ async function selectUniversity(university) {
         // if its not previously loaded, then load the prices
         document.querySelectorAll('.boardServicePrice').forEach(e => e.textContent = "Loading...");
         priceLoaded = university;
-        changeContent('services', 'selectBoardService');
+        changeContent('', 'selectBoardService');
         // await blabla()
         await loadServicePrice();
     } else {
-        changeContent('services', 'selectBoardService');
+        changeContent('', 'selectBoardService');
     }
 }
 
@@ -180,14 +181,16 @@ async function selectBoardService(product) {
     let productid = product; // Store serviceid globally
     globalThis.productid = productid
     document.getElementById("productid-input").value = productid;
-    changeContent('services', 'boardServiceOrder');
+    clearProductUI()
+    document.querySelector('.footerMenu').classList.add('hidden')
+    changeContent('', 'boardServiceOrder');
     await fetchProduct(); // Default to Marks Certificate
 }
 
 
 
 function goBackToSelectBoardService() {
-    changeContent('services', 'selectBoardService');
+    changeContent('', 'selectBoardService');
     document.getElementById("order-form").reset();
 }
 
@@ -204,17 +207,13 @@ function goBackToSelectBoardService() {
 const serviceOptions = [
     "Marks_Certificate",
     "Pass_Certificate",
-    "Pakka_Certificate",
+    "Creation_Pakka_Certificate",
     "Duplicate_Pakka_Certificate",
     "Migration",
-    "Eligibility",
-    "Affiliation",
-    "Recounting_per_Paper",
-    "Improvement_of_Grade",
-    "Correction",
+    "Eligibility_Certificate",
+    "Eligibility_Other_Province",
     "DOB_Certificate",
-    "Certificate_Verification",
-    "TC",
+    "Verification",
 ];
 
 
@@ -289,7 +288,7 @@ async function loadServicePrice() {
                 } else {
                     document.getElementById("price-" + serviceOption).textContent = "Not found";
                 }
-            } catch{
+            } catch {
                 document.getElementById("price-" + serviceOption).textContent = "Error";
             }
         }
@@ -343,6 +342,10 @@ const productCategory = document.getElementById("product-category");
 const productImage = document.getElementById("product-image");
 const priceDisplay = document.getElementById("price-display");
 const payButton = document.getElementById("pay-button");
+const nextFormContent1 = document.querySelector(".nextFormContent1");
+const nextFormContent2 = document.querySelector(".nextFormContent2");
+const nextFormContent3 = document.querySelector(".nextFormContent3");
+const screenshotFile = document.getElementById("screenshotFile");
 
 const classSelect = document.getElementById("class-name");
 const groupSelect = document.getElementById("group-select");
@@ -377,78 +380,168 @@ async function fetchProduct() {
 function fillProductUI(product) {
     productName.textContent = product.name;
     productCategory.textContent = `Category: ${product.category}`;
-    productImage.src = product.image?.[0] || "assets/default.png";
+    productImage.src = product.image?.[0] || "assets 2/default.png";
     priceDisplay.textContent = `Rs. ${product.selling_price}`;
-    validateForm();
+    validateForm1();
 }
 
-function disablePay() {
-    payButton.disabled = true;
+function clearProductUI() {
+    productName.textContent = "";
+    productCategory.textContent = "";
+    productImage.src = "assets 2/loading.gif";
+    priceDisplay.textContent = 'Loading Price...';
 }
 
-function enablePay() {
-    payButton.disabled = false;
+function enableNextFormContent1() {
+    nextFormContent1.disabled = false;
+    nextFormContent1.setAttribute('style', "");
 }
 
-function validateForm() {
+function disableNextFormContent1() {
+    nextFormContent1.disabled = true;
+    nextFormContent1.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
+}
+
+function enableNextFormContent2() {
+    nextFormContent2.disabled = false;
+    nextFormContent2.setAttribute('style', "");
+}
+
+function disableNextFormContent2() {
+    nextFormContent2.disabled = true;
+    nextFormContent2.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
+}
+
+function enableNextFormContent3() {
+    nextFormContent3.disabled = false;
+    nextFormContent3.setAttribute('style', "");
+}
+
+function disableNextFormContent3() {
+    nextFormContent3.disabled = true;
+    nextFormContent3.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
+}
+
+document.getElementById("order-form").addEventListener("input", validateForm1);
+function validateForm1() {
     const form = document.getElementById("order-form");
     const fields = [...form.elements].filter(el => el.hasAttribute("required"));
     const filled = fields.every(el => el.value.trim() !== "");
     if (filled && currentProduct?.selling_price) {
-        enablePay();
+        enableNextFormContent1()
     } else {
-        disablePay();
+        disableNextFormContent1()
     }
 }
 
-document.getElementById("order-form").addEventListener("input", validateForm);
 
-function generateOrderID() {
-    return "ORD-" + Math.random().toString(36).substring(2, 10).toUpperCase();
+
+function validateForm2() {
+    const form = document.getElementById("order-form");
+    const fields = [...form.elements].filter(el => el.hasAttribute("required"));
+    const filled = fields.every(el => el.value.trim() !== "");
+    if (filled && currentProduct?.selling_price) {
+        enableNextFormContent2()
+    } else {
+        disableNextFormContent2()
+    }
 }
 
+document.getElementById("order-form").addEventListener("input", validateForm2);
+
+
+
+screenshotFile.addEventListener('change', (event) => {
+    const selectedFiles = event.target.files;
+
+    if (selectedFiles.length > 0) {
+        enableNextFormContent3()
+    } else {
+        disableNextFormContent3()
+    }
+});
+
+
+// this is a pay button
+// Paybutton
 payButton.addEventListener("click", async () => {
+    // disableNextFormContent3()
+    const orderId = "ORD-" + Math.random().toString(36).substring(2, 10).toUpperCase();
     const form = document.getElementById("order-form");
     const formData = Object.fromEntries(new FormData(form).entries());
-    const orderId = generateOrderID();
-
+    
     const orderData = {
         productid: productid,
         orderid: orderId,
         order_placed: new Date(),
         form: formData
     };
-
+    
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlay-text");
     const overlayActions = document.getElementById("overlay-actions");
-
+    
     overlay.classList.remove("hidden");
     overlayText.textContent = "Processing...";
     overlayActions.classList.add("hidden");
-
+    
     let redirected = false;
-
+    
     const timeout = setTimeout(() => {
         if (!redirected) {
             overlayText.textContent = "Error placing order.";
             overlayActions.classList.remove("hidden");
         }
     }, 60000);
-
+    
     try {
+        await startImageUpload(orderId)
         await db.collection("orders").doc("new orders").collection("list").doc(orderId).set(orderData);
+        showToast('Order Uploaded')
         sessionStorage.setItem("pendingOrder", JSON.stringify({ ...orderData, name: currentProduct.name, category: currentProduct.category, price: currentProduct.selling_price }));
         redirected = true;
         clearTimeout(timeout);
-        window.location.href = "payment.html";
+        // where to go after submitting form
+        overlay.classList.add("hidden");
+        changeContent('', 'boardOrderSuccess')
     } catch (e) {
         console.error(e);
         overlayText.textContent = "Error placing order.";
         overlayActions.classList.remove("hidden");
     }
+
+
 });
 
+function changeView(Hide, Show) {
+    document.querySelector(Hide).classList.add('hidden')
+    document.querySelector(Show).classList.remove('hidden')
+}
+
+
+
+nextFormContent1.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setTimeout(() => {
+        document.querySelectorAll('.step')[0].classList.remove('current')
+        document.querySelectorAll('.step')[0].classList.add('completed')
+        document.querySelectorAll('.step')[1].classList.add('current')
+        changeView('.orderInfo', '.payment')
+        document.getElementById('accountTypeFrom').required = true
+        document.getElementById('accountNumber').required = true
+        validateForm2()
+    }, 500)
+})
+
+nextFormContent2.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setTimeout(() => {
+        document.querySelectorAll('.step')[1].classList.remove('current')
+        document.querySelectorAll('.step')[1].classList.add('completed')
+        document.querySelectorAll('.step')[2].classList.add('current')
+        changeView('.payment', '.paymentConfirmation')
+    }, 500)
+})
 
 
 
@@ -461,23 +554,14 @@ payButton.addEventListener("click", async () => {
 
 
 
-
-
-
-
-
-
-
-
-
+// make recoud_year always between 2000 to current year
 document.getElementById('record_year').addEventListener('input', function () {
     const selectedYear = this.value;
     const currentYear = new Date().getFullYear();
     if (selectedYear === '') {
         this.style.border = ""; // Remove the highlight
-    } else if (!(selectedYear <= currentYear && selectedYear > 2000)) {
+    } else if (!(selectedYear <= currentYear && selectedYear >= 2000)) {
         // Handle case where selected year is in the past
-        this.setCustomValidity("Please select a valid year between 2000 and the current year.");
         this.style.border = "2px solid red"; // Highlight the input
     } else {
         // this.setCustomValidity(""); // Clear any custom validity message
@@ -487,6 +571,7 @@ document.getElementById('record_year').addEventListener('input', function () {
 
 
 
+// make select label float when focused
 const selects = document.querySelectorAll('.formSelect');
 const targetLabels = document.querySelectorAll('.selectLabel');
 selects.forEach((select, index) => {
@@ -498,3 +583,166 @@ selects.forEach((select, index) => {
         }
     })
 });
+
+
+
+
+
+
+
+
+
+const FULL_DASH_ARRAY = 339.29;
+let timeLeft = 300;
+let timerInterval;
+
+// 🕒 Start the countdown timer
+function startTimer() {
+    const progressCircle = document.getElementById("progress-ring");
+    const timerText = document.getElementById("timer-text");
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+        const progress = FULL_DASH_ARRAY * (timeLeft / 300);
+        progressCircle.setAttribute("stroke-dashoffset", FULL_DASH_ARRAY - progress);
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerText.textContent = "Time's up!";
+        }
+    }, 1000);
+}
+
+// 🏦 Handle bank selection and show payment section
+function selectBank(card, BankName) {
+    document.querySelectorAll('.bank-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    document.getElementById("accountTypeFrom").value = BankName;
+    const accountNameFrom = BankName
+    globalThis.accountNameFrom = accountNameFrom
+    // document.querySelector('.bank-selection').classList.add('hidden')
+
+    document.querySelector('.accountNumber').style.display = 'block';
+}
+
+
+
+
+function selectBankToSend(card, BankName) {
+    setTimeout(() => {
+        document.querySelector('.countdown-ring').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 250)
+
+    document.querySelectorAll('.bank-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById("accountTypeTo").value = BankName;
+    const accountNameTo = BankName
+    globalThis.accountNameTo = accountNameTo
+    card.classList.add('selected');
+    fetchAccountNumber(BankName)
+    clearInterval(timerInterval);
+    timeLeft = 300;
+    startTimer();
+
+    document.getElementById('payment-timer').style.display = 'block';
+}
+
+async function fetchAccountNumber(iban) {
+    const docRef = db.collection('4wwZIToefKer1zug2sc8IHjPh4VIl7beFiA2E4GoZIJHvpQ6A8').doc("accounts");
+    docRef.get().then((doc) => {
+        try {
+            const data = doc.data();
+            if (doc.exists) {
+                document.getElementById("account-number").textContent = `${data[iban]}`;
+                document.getElementById("account-number").style.color = 'black'
+            } else {
+                document.getElementById("account-number").innerHTML = "Account Full!, Try Other";
+            }
+        } catch {
+            document.getElementById("account-number").innerHTML = "Accounts document not found.";
+        }
+    }).catch((error) => {
+        console.error('Error fetching document:', error);
+    });
+};
+
+
+// 📋 Copy account number (uses fallback for WebView support)
+function copyToClipboard(contentQuery) {
+    const accountNumber = document.querySelector(contentQuery).innerText;
+
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(accountNumber).then(() => {
+            showToast("Copied!");
+        }).catch((err) => {
+            console.warn("Clipboard API failed, using fallback");
+            fallbackCopy(accountNumber);
+        });
+    } else {
+        fallbackCopy(accountNumber);
+    }
+}
+
+// 📋 Clipboard fallback using input element
+function fallbackCopy(text) {
+    const input = document.createElement('input');
+    input.setAttribute('value', text);
+    document.body.appendChild(input);
+    input.select();
+    try {
+        const success = document.execCommand('copy');
+        showToast(success ? "Copied!" : "Copy failed");
+    } catch (err) {
+        showToast("Copy not supported");
+    }
+    document.body.removeChild(input);
+}
+
+// ✅ Show toast message (works in WebView too)
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.remove("show");
+    void toast.offsetWidth; // Trigger reflow
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2000);
+}
+
+
+
+async function startImageUpload(orderid) {
+    const file = screenshotFile.files[0];
+    const customName = orderid
+
+    const cloudName = 'did3wd6d4';       // Your Cloudinary cloud name
+    const uploadPreset = 'oSmartTesting'; // Your unsigned preset
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', uploadPreset);
+    formData.append('public_id', customName); // Custom file name without extension
+
+    try {
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.secure_url) {
+            showToast('Image Uploaded!')
+        } else {
+            showToast('❌ Image Upload Failed')
+        }
+    } catch (err) {
+        showToast('Error')
+    }
+}
