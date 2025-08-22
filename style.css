@@ -180,16 +180,42 @@
     /* Ensure it's on top of other content */
 }
 
-.loader {
-    border: 8px solid #f3f3f3;
-    /* Light grey border */
-    border-top: 8px solid #3498db;
-    /* Blue spinning part */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
+
+.gradient-image {
+    width: 300px;
+    height: 300px;
+
+    background: linear-gradient(270deg, #111111, #3d3d3d, #111111, #3d3d3d, #111111, #3d3d3d, #111111, #3d3d3d, #111111);
+    background-size: 600% 600%;
+    animation: gradientFlow 10s linear infinite;
+
+    /* Mask with transparent PNG */
+    -webkit-mask: url("assets 2/logo.png") center/contain no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+
+    mask: url("assets 2/logo.png") center/contain no-repeat;
+    mask-repeat: no-repeat;
+    mask-size: contain;
 }
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 200% 50%; /* keeps moving forward instead of reversing */
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+/* .image-with-animated-gradient {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0)), url('your-image.jpg');
+  background-size: cover;
+  animation: gradient-slide 5s infinite alternate;
+} */
 
 @keyframes spin {
     0% {
@@ -281,9 +307,11 @@ body {
     0% {
         visibility: 1;
     }
+
     50% {
         visibility: 0.5;
     }
+
     100% {
         visibility: 0;
     }
