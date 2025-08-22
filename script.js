@@ -216,63 +216,6 @@ const serviceOptions = [
     "Verification",
 ];
 
-
-// async function loadServicePrice() {
-//     for (const serviceOption of serviceOptions) {
-//         try {
-//             const docRef = db.collection("products").doc("certificate").collection(category).doc(serviceOption.replace(/_/g, ' '));
-//             const docSnap = await docRef.get();
-
-//             if (docSnap.exists) {
-//                 const data = docSnap.data();
-//                 const priceEl = document.getElementById("price-" + serviceOption);
-//                 const linkEl = priceEl.parentElement;
-
-//                 priceEl.textContent = `Rs. ${data.selling_price}`;
-//                 linkEl.setAttribute('onclick', `selectBoardService('${data.productid}')`);
-//             } else {
-//                 document.getElementById("price-" + serviceOption).textContent = "Not found";
-//             }
-//         } catch (err) {
-//             console.error("Error fetching serviceOption:", serviceOption, err);
-//             document.getElementById("price-" + serviceOption).textContent = "Error";
-//         }
-//     }
-// }
-
-
-
-
-
-
-
-// async function loadServicePrice() {
-//     for (const serviceOption of serviceOptions) {
-//         try {
-//             const docRef = db.collection("products").doc("certificate").collection(category).doc(serviceOption.replace(/_/g, ' '));
-//             const docSnap = await docRef.get();
-
-//             if (docSnap.exists) {
-//                 const data = docSnap.data();
-//                 const priceEl = document.getElementById("price-" + serviceOption);
-//                 const linkEl = priceEl.parentElement;
-
-//                 priceEl.textContent = `Rs. ${data.selling_price}`;
-//                 linkEl.setAttribute('onclick', `selectBoardService('${data.productid}')`);
-//             } else {
-//                 document.getElementById("price-" + serviceOption).textContent = "Not found";
-//             }
-//         } catch (err) {
-//             console.error("Error fetching serviceOption:", serviceOption, err);
-//             document.getElementById("price-" + serviceOption).textContent = "Error";
-//         }
-//     }
-// }
-
-
-
-
-
 async function loadServicePrice() {
     const docRef = db.collection('products').doc("certificate").collection('list').doc(category);
     docRef.get().then((doc) => {
@@ -469,31 +412,31 @@ payButton.addEventListener("click", async () => {
     const orderId = "ORD-" + Math.random().toString(36).substring(2, 10).toUpperCase();
     const form = document.getElementById("order-form");
     const formData = Object.fromEntries(new FormData(form).entries());
-    
+
     const orderData = {
         productid: productid,
         orderid: orderId,
         order_placed: new Date(),
         form: formData
     };
-    
+
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlay-text");
     const overlayActions = document.getElementById("overlay-actions");
-    
+
     overlay.classList.remove("hidden");
     overlayText.textContent = "Processing...";
     overlayActions.classList.add("hidden");
-    
+
     let redirected = false;
-    
+
     const timeout = setTimeout(() => {
         if (!redirected) {
             overlayText.textContent = "Error placing order.";
             overlayActions.classList.remove("hidden");
         }
     }, 60000);
-    
+
     try {
         await startImageUpload(orderId)
         await db.collection("orders").doc("new orders").collection("list").doc(orderId).set(orderData);
@@ -503,7 +446,8 @@ payButton.addEventListener("click", async () => {
         clearTimeout(timeout);
         // where to go after submitting form
         overlay.classList.add("hidden");
-        changeContent('', 'boardOrderSuccess')
+        resetOffers()
+        resetOffers()
     } catch (e) {
         console.error(e);
         overlayText.textContent = "Error placing order.";
@@ -512,6 +456,22 @@ payButton.addEventListener("click", async () => {
 
 
 });
+
+function resetOffers() {
+    changeView('.paymentConfirmation', '.orderInfo')
+    changeContent('', 'boardOrderSuccess')
+    document.querySelector('.footerMenu').classList.remove('hidden')
+    document.querySelectorAll('.step')[0].classList.remove('completed')
+    document.querySelectorAll('.step')[1].classList.remove('completed')
+    document.querySelectorAll('.step')[2].classList.remove('current')
+    document.querySelectorAll('.step')[0].classList.add('current')
+    // Clear the form
+    document.getElementById("order-form").reset();
+    document.getElementById('accountTypeFrom').required = false
+    document.getElementById('accountNumber').required = false
+    document.getElementById("screenshotFile").value = null;
+
+}
 
 function changeView(Hide, Show) {
     document.querySelector(Hide).classList.add('hidden')
