@@ -88,6 +88,10 @@
 }
 
 
+.homeMenu {
+    overflow-y: scroll;
+}
+
 
 /* make  */
 
@@ -365,3 +369,4 @@
         height: 30px;
     }
 }
+
