@@ -447,7 +447,6 @@ payButton.addEventListener("click", async () => {
         // where to go after submitting form
         overlay.classList.add("hidden");
         resetOffers()
-        resetOffers()
     } catch (e) {
         console.error(e);
         overlayText.textContent = "Error placing order.";

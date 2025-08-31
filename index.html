@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="services.css">
+    <link rel="stylesheet" href="cart.css">
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    <script src="preload.js"></script>
     <script src="script.js" defer></script>
+    <script src="contentLoading.js" defer></script>
+    <script src="cart.js" defer></script>
 </head>
 
 <body>
@@ -39,7 +44,8 @@
                 <div class="headerRow2">
                     <div id="search-bar">
                         <span class="searchLogo"><img src="assets 2/search.png" /></span>
-                        <input id="search-input" type="text" placeholder="Search" oninput="" onblur="" />
+                        <input id="search-input" type="text" placeholder="Search" oninput="searchProducts()"
+                            onblur="restoreSearch()" />
                     </div>
                     <span class="filter">
                         <img src="assets/filter.png" alt="Filter Icon" />
@@ -50,69 +56,71 @@
 
             <!-- Container -->
             <div class="universalContentSpace">
-                <!-- Contents -->
-                <div>
-                    <!-- Special Offers -->
-                    <div class="specialOffers">
-                        <div class="specialOfferHeader">
-                            <span>#SpecialForYou</span>
-                            <span style="color: var(--primary-color); font-size: small;">See all</span>
-                        </div>
-                        <div class="specialOfferContent">
-                            <div class="specialOfferCards">
-                                <div onclick="changeContent('services','selectUniversity')" class="offerCard ">Card 1
+                <div class="homeScreen">
+                    <!-- Contents -->
+                    <div class="homeContainer">
+                        <!-- Special Offers -->
+                        <div class="specialOffers">
+                            <div class="specialOfferHeader">
+                                <span>#SpecialForYou</span>
+                                <span style="color: var(--primary-color); font-size: small;">See all</span>
+                            </div>
+                            <div class="specialOfferContent">
+                                <div class="specialOfferCards">
+                                    <div onclick="changeContent('services','selectUniversity')" class="offerCard ">
+                                        Card1
+                                    </div>
+                                    <div class="offerCard">Card 2</div>
+                                    <div class="offerCard">Card 3</div>
+                                    <div class="offerCard">Card 4</div>
+                                    <div class="offerCard">Card 5</div>
                                 </div>
-                                <div class="offerCard">Card 2</div>
-                                <div class="offerCard">Card 3</div>
-                                <div class="offerCard">Card 4</div>
-                                <div class="offerCard">Card 5</div>
-                            </div>
-                            <div class="offerButtons">
-                                <input class="offerRadio" type="radio" name="offer" id="offer1" checked>
-                                <input class="offerRadio" type="radio" name="offer" id="offer2">
-                                <input class="offerRadio" type="radio" name="offer" id="offer3">
-                                <input class="offerRadio" type="radio" name="offer" id="offer4">
-                                <input class="offerRadio" type="radio" name="offer" id="offer5">
+                                <div class="offerButtons">
+                                    <input class="offerRadio" type="radio" name="offer" id="offer1" checked>
+                                    <input class="offerRadio" type="radio" name="offer" id="offer2">
+                                    <input class="offerRadio" type="radio" name="offer" id="offer3">
+                                    <input class="offerRadio" type="radio" name="offer" id="offer4">
+                                    <input class="offerRadio" type="radio" name="offer" id="offer5">
+                                </div>
                             </div>
                         </div>
+                        <!-- Special Offers -->
+                        <!-- Category -->
+                        <div class="category">
+                            <div class="categoryHeader">
+                                <span>Category</span>
+                                <span style="color: var(--primary-color); font-size: small;">See All</span>
+                            </div>
+                            <div class="categoryContent">
+                                <div class="categoryButton" onclick="openCategory('Cloths')">
+                                    <div class="categoryImageContainer">
+                                        <img class="categoryImage red" src="assets/clothes.png" alt="Category 1">
+                                    </div>
+                                    <div class="categoryTitle">Cloths</div>
+                                </div>
+                                <div class="categoryButton" onclick="openCategory('Electronics')">
+                                    <div class="categoryImageContainer">
+                                        <img class="categoryImage red" src="assets/electronics.png" alt="Category 2">
+                                    </div>
+                                    <div class="categoryTitle">Electronics</div>
+                                </div>
+                                <div class="categoryButton" onclick="openCategory('Shoes')">
+                                    <div class="categoryImageContainer">
+                                        <img class="categoryImage red" src="assets/shoes.png" alt="Category 3">
+                                    </div>
+                                    <div class="categoryTitle">Shoes</div>
+                                </div>
+                                <div class="categoryButton" onclick="openCategory('Books')">
+                                    <div class="categoryImageContainer">
+                                        <img class="categoryImage red" src="assets/9grid.png" alt="Category 4">
+                                    </div>
+                                    <div class="categoryTitle">Books</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Category -->
                     </div>
-                    <!-- Special Offers -->
-
-                    <!-- Category -->
-                    <div class="category">
-                        <div class="categoryHeader">
-                            <span>Category</span>
-                            <span style="color: var(--primary-color); font-size: small;">See All</span>
-                        </div>
-                        <div class="categoryContent">
-                            <div class="categoryButton">
-                                <div class="categoryImageContainer">
-                                    <img class="categoryImage red" src="assets/clothes.png" alt="Category 1">
-                                </div>
-                                <div class="categoryTitle">Cloths</div>
-                            </div>
-                            <div class="categoryButton">
-                                <div class="categoryImageContainer">
-                                    <img class="categoryImage red" src="assets/electronics.png" alt="Category 2">
-                                </div>
-                                <div class="categoryTitle">Electronics</div>
-                            </div>
-                            <div class="categoryButton">
-                                <div class="categoryImageContainer">
-                                    <img class="categoryImage red" src="assets/shoes.png" alt="Category 3">
-                                </div>
-                                <div class="categoryTitle">Shoes</div>
-                            </div>
-                            <div class="categoryButton">
-                                <div class="categoryImageContainer">
-                                    <img class="categoryImage red" src="assets/9grid.png" alt="Category 4">
-                                </div>
-                                <div class="categoryTitle">Books</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Category -->
-
+                    <!-- Contents -->
                     <!-- Flash Sales -->
                     <div class="flashSales">
                         <div class="flashSalesHeader">
@@ -120,11 +128,36 @@
                             <span style="color: var(--primary-color); font-size: small;">See All</span>
                         </div>
                         <div class="flashSalesContent">
+                            <div id="product-grid"></div>
                         </div>
                     </div>
                     <!-- Flash Sales -->
                 </div>
-                <!-- Contents -->
+
+                <!-- Category Cloths -->
+                <div class="home-main-Cloths hidden">
+                    <div class="title" onclick="changeView('.home-main-Cloths','.homeScreen')">Back</div>
+                    <div class="Cloths-content categoryContent"></div>
+                </div>
+                <!-- Category Cloths -->
+                <!-- Category Cloths -->
+                <div class="home-main-Electronics hidden">
+                    <div class="title" onclick="changeView('.home-main-Electronics','.homeScreen')">Back</div>
+                    <div class="Electronics-content categoryContent"></div>
+                </div>
+                <!-- Category Cloths -->
+                <!-- Category Cloths -->
+                <div class="home-main-Shoes hidden">
+                    <div class="title" onclick="changeView('.home-main-Shoes','.homeScreen')">Back</div>
+                    <div class="Shoes-content categoryContent"></div>
+                </div>
+                <!-- Category Cloths -->
+                <!-- Category Cloths -->
+                <div class="home-main-Books hidden">
+                    <div class="title" onclick="changeView('.home-main-Books','.homeScreen')">Back</div>
+                    <div class="Books-content categoryContent"></div>
+                </div>
+                <!-- Category Cloths -->
             </div>
             <!-- Container -->
         </section>
@@ -540,7 +573,9 @@
             <!-- Heading -->
 
             <!-- Container -->
-            <div class="universalContentSpace"></div>
+            <div class="universalContentSpace">
+                <div id="orders-container"></div>
+            </div>
             <!-- Container -->
         </section>
     </div>

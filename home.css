@@ -88,9 +88,7 @@
 }
 
 
-.homeMenu {
-    overflow-y: scroll;
-}
+
 
 
 /* make  */
@@ -120,9 +118,11 @@
             background: transparent;
 
             .offerCard {
-                width: 280px;
-                height: 150px;
-                background-color: #f0f0f0;
+                width: 100%;
+                max-width: 400px;
+                /* height: 150px; */
+                aspect-ratio: 16 / 9;
+                background-color: #aaaaaa;
                 border-radius: 10px;
                 color: black;
                 flex-shrink: 0;
@@ -137,6 +137,7 @@
 
             .offerRadio {
                 margin: 0 5px;
+                accent-color: var(--primary-color);
             }
         }
     }
@@ -198,13 +199,55 @@
     margin-top: 10px;
 
     .flashSalesContent {
-        /* this is temporary code so that warning is not shown */
-        padding: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        #product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-evenly;
+            margin-top: 15px;
+        }
     }
 }
 
+.notFoundMessage {
+    text-align: center;
+    color: #6B7280;
+}
 
+.errorMessage {
+    text-align: center;
+    color: #EF4444;
+}
 
+.cards {
+    width: 100%;
+    max-width: 130px;
+    display: block;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+
+    &:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    img {
+        background-color: gray;
+    }
+}
+
+.categoryContent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-evenly;
+    margin-top: 15px;
+}
 
 
 
@@ -276,7 +319,7 @@
         column-gap: 20px;
     }
 
-    
+
 
     #search-bar {
         display: flex;
@@ -332,6 +375,7 @@
     background-color: var(--background-color);
     z-index: 1000;
     height: 100%;
+    overflow-y: scroll;
 }
 
 .filter {
@@ -369,4 +413,3 @@
         height: 30px;
     }
 }
-

@@ -186,7 +186,7 @@
     height: 300px;
 
     background: linear-gradient(270deg, #111111, #3d3d3d, #111111, #3d3d3d, #111111, #3d3d3d, #111111, #3d3d3d, #111111);
-    background-size: 600% 600%;
+    background-size: 1000% 1000%;
     animation: gradientFlow 10s linear infinite;
 
     /* Mask with transparent PNG */
