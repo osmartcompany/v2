@@ -31,7 +31,6 @@
     --background-color: #f9f9f9;
     --primary-text-color: #333;
     --secondary-text-color: white;
-    --order-form-bg: rgb(24,24,24);
 }
 
 .headTitle {
@@ -370,10 +369,9 @@ body {
 /* Styles for dark theme */
 @media (prefers-color-scheme: dark) {
     :root {
-        --background-color: #0b0f16 !important;
+        --background-color: #121212;
         --primary-text-color: white;
         --secondary-text-color: black;
-        --order-form-bg: background-color: rgb(245 245 245);;
     }
 
     heading {

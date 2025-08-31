@@ -4,7 +4,7 @@
     --service-width-max: 150px;
     --service-width-min: 100px;
     --service-gap: 5px;
-    ;
+    --service-secondary-color: #f3f3f3;
 }
 
 .serviceCards {
@@ -167,7 +167,7 @@ calc(var(--service-width-max) * 3 + var(--service-gap) * 2);
     .boardOrderDetails {
         padding: 1rem;
         border-radius: 0.75rem;
-        background-color: #333;
+        background-color: var(--service-secondary-color);
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
         .boardOrderDetailsContent {
@@ -354,8 +354,8 @@ calc(var(--service-width-max) * 3 + var(--service-gap) * 2);
     padding: 1rem;
     justify-content: space-between;
     align-items: center;
-    background-color: #363636;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    background-color: var(--service-secondary-color);
+    box-shadow: 1px 4px 20px 10px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
     div {
         font-size: 1.125rem;
@@ -690,4 +690,10 @@ calc(var(--service-width-max) * 3 + var(--service-gap) * 2);
     font-weight: 700;
     color: var(--primary-text-color);
     background-color: green;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --service-secondary-color: #161616;
+    }
 }
