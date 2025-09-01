@@ -38,7 +38,7 @@
                 <div class="headerRow1">
                     <div class="heading">Home</div>
                     <div class="notification">
-                        <div class="red"><img class="red" src="assets/notification.png" alt="Logo"></div>
+                        <div class="red"><img src="assets/notification.png" alt="Logo"></div>
                     </div>
                 </div>
                 <div class="headerRow2">
@@ -136,25 +136,25 @@
 
                 <!-- Category Cloths -->
                 <div class="home-main-Cloths hidden">
-                    <div class="title" onclick="changeView('.home-main-Cloths','.homeScreen')">Back</div>
+                    <div onclick="changeView('.home-main-Cloths','.homeScreen')">Back</div>
                     <div class="Cloths-content categoryContent"></div>
                 </div>
                 <!-- Category Cloths -->
                 <!-- Category Cloths -->
                 <div class="home-main-Electronics hidden">
-                    <div class="title" onclick="changeView('.home-main-Electronics','.homeScreen')">Back</div>
+                    <div onclick="changeView('.home-main-Electronics','.homeScreen')">Back</div>
                     <div class="Electronics-content categoryContent"></div>
                 </div>
                 <!-- Category Cloths -->
                 <!-- Category Cloths -->
                 <div class="home-main-Shoes hidden">
-                    <div class="title" onclick="changeView('.home-main-Shoes','.homeScreen')">Back</div>
+                    <div onclick="changeView('.home-main-Shoes','.homeScreen')">Back</div>
                     <div class="Shoes-content categoryContent"></div>
                 </div>
                 <!-- Category Cloths -->
                 <!-- Category Cloths -->
                 <div class="home-main-Books hidden">
-                    <div class="title" onclick="changeView('.home-main-Books','.homeScreen')">Back</div>
+                    <div onclick="changeView('.home-main-Books','.homeScreen')">Back</div>
                     <div class="Books-content categoryContent"></div>
                 </div>
                 <!-- Category Cloths -->
@@ -162,48 +162,6 @@
             <!-- Container -->
         </section>
         <!-- Home Main -->
-
-        <!-- Home Content Redirect1 -->
-        <section class="home-content1 universalSpace hidden">
-            <!-- Heading -->
-            <div class="headTitle">Home 2</div>
-            <!-- Heading -->
-            <!-- Container -->
-            <div class="container">
-                <!-- Contents -->
-                <div onclick="delayedRedirect(`https:\/\/www.google.com`)"
-                    class="content universalContentSpace content1">
-                    <div>
-                        <img src="assets/1.png" alt="1.png">
-                    </div>
-                    <div class="description">
-                        <div class="contentTitle">LIQUID GOLD AF1</div>
-                        <div class="contentDescription">Liquid Gold Air Force 1x</div>
-                    </div>
-                </div>
-                <div class="content content2">
-                    <div>
-                        <img src="assets/1.png" alt="1.png">
-                    </div>
-                    <div class="description">
-                        <div class="contentTitle">PUMA CELL ALEIN KOTTO</div>
-                        <div class="contentDescription">Liquid Gold Air Force 1x</div>
-                    </div>
-                </div>
-                <div class="content content3">
-                    <div>
-                        <img src="assets/1.png" alt="1.png">
-                    </div>
-                    <div class="description">
-                        <div class="contentTitle">Liquid Gold AF1</div>
-                        <div class="contentDescription">Liquid Gold Air Force 1x</div>
-                    </div>
-                </div>
-                <!-- Contents -->
-            </div>
-            <!-- Container -->
-        </section>
-        <!-- Home Content Redirect1 -->
 
         <!-- Separator -->
         <div class="separator"></div>
@@ -213,7 +171,8 @@
 
     <!-- Services -->
     <div class="servicesMenu hidden">
-        <section class="services-main universalSpace">
+        <!-- <section class="services-main hidden universalSpace"> -->
+        <section class="services-main-f hidden universalSpace">
             <!-- Heading -->
             <div class="headTitle">Services</div>
             <!-- Heading -->
@@ -235,7 +194,8 @@
         </section>
 
         <!-- Select University -->
-        <section class="services-selectUniversity universalSpace hidden">
+        <!-- <section class="services-selectUniversity universalSpace hidden"> -->
+        <section class="services-main universalSpace">
             <!-- Heading -->
             <div class="headTitle">Order Certificate</div>
             <!-- Heading -->
@@ -256,7 +216,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="activeOutline">
+                    <!-- <div class="activeOutline">
                         <div onclick="selectUniversity('BISES')" class="universityContent">
                             <div class="universityImage">
                                 <img src="assets 2/bises.png" alt="BISES">
@@ -295,7 +255,7 @@
                                 Board Shaheed Benazirabad
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <!-- Select Certificate Content -->
@@ -383,7 +343,7 @@
                 </div>
 
                 <!-- Order Form -->
-                <form id="order-form" onsubmit="return false">
+                <form id="order-form" onsubmit="return false" style="margin: 0;">
                     <!-- Order Info -->
                     <div class="orderInfo">
                         <input type="hidden" name="productid" id="productid-input" />

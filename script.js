@@ -419,6 +419,8 @@ payButton.addEventListener("click", async () => {
         order_placed: new Date(),
         form: formData
     };
+    saveOrderInfo(orderId)
+    console.log('orderData saved!')
 
     const overlay = document.getElementById("overlay");
     const overlayText = document.getElementById("overlay-text");
@@ -447,14 +449,32 @@ payButton.addEventListener("click", async () => {
         // where to go after submitting form
         overlay.classList.add("hidden");
         resetOffers()
+        loadOrders()
     } catch (e) {
         console.error(e);
         overlayText.textContent = "Error placing order.";
         overlayActions.classList.remove("hidden");
     }
-
-
 });
+
+let orderCount;
+function saveOrderInfo(orderinfo) {
+    if (!localStorage.getItem('orderCount')) {
+        localStorage.setItem('orderCount', String(1))
+        orderCount = localStorage.getItem('orderCount')
+    } else {
+        localStorage.setItem('orderCount', String(Number(localStorage.getItem('orderCount')) + 1))
+        orderCount = localStorage.getItem('orderCount')
+    }
+    localStorage.setItem(orderCount, orderinfo)
+    printOrders()
+}
+
+async function printOrders() {
+    for (let i = 1; i <= Number(orderCount); i++) {
+        console.log(localStorage.getItem(`${i}`))
+    }
+}
 
 function resetOffers() {
     changeView('.paymentConfirmation', '.orderInfo')
