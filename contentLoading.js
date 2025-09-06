@@ -33,8 +33,8 @@ function renderProducts(products) {
 
     products.forEach(product => {
         const card = document.createElement("a");
-        card.href = `preview.html?productid=${product.productid}`;
         card.className = "cards";
+        card.onclick = () => selectProductOrder(product.productid)
         card.innerHTML = `
         <img src="${product.image?.[0] || ''}" onerror="this.src='assets 2/default.png'" style="object-fit: cover; margin-bottom: 0rem; border-radius: 0.75rem 0.75rem 0 0; width: 100%; aspect-ratio: 1 / 1;">
         <div style="padding: 0 0.25rem 0.5rem 0.5rem; line-height: 1.25;">
@@ -97,3 +97,56 @@ async function openCategory(categoryName) {
         loadProducts()
     }
 }
+
+
+
+
+
+async function renderProducts2(products) {
+    products.forEach((product, index) => {
+        const cardl = document.querySelectorAll('.offerCard')[index]
+        cardl.innerHTML = ''
+        if (product.productid) {
+           cardl.onclick = () => selectProductOrder(product.productid);
+        } else {
+            cardl.onclick = () => changeContent(product.ref[0],product.ref[1]);
+        }
+        const cardImage = document.createElement('img')
+        cardImage.className = "cardsImage";
+        cardImage.src = product.image
+        cardl.appendChild(cardImage)
+    });
+}
+
+async function loadProducts2() {
+    try {
+        const snap = await db.collection("productid")
+            .where("category", "==", 'card')
+            .get();
+
+        // include id (handy later) and spread fields
+        allProducts = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+        // Coerce rank: number -> itself; string -> Number(str); null/undefined/NaN -> +Infinity
+        const toRank = (v) => {
+            if (v === null || v === undefined) return Number.POSITIVE_INFINITY;
+            const n = typeof v === "number" ? v : Number(v);
+            return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+        };
+
+        // Ascending: lowest rank first. Use (toRank(b.rank) - toRank(a.rank)) for descending.
+        allProducts.sort((a, b) => toRank(a.rank) - toRank(b.rank));
+
+        fuse = new Fuse(allProducts, {
+            keys: ["name", "category"],
+            threshold: 0.4,
+            ignoreLocation: true
+        });
+
+        renderProducts2(allProducts);
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+loadProducts2()

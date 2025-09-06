@@ -177,13 +177,38 @@ async function selectUniversity(university) {
     }
 }
 
-async function selectBoardService(product) {
+async function selectProductOrder(product) {
     let productid = product; // Store serviceid globally
     globalThis.productid = productid
+    document.querySelector('#class-name').required = false
+    document.querySelector('#group-select').required = false
+    document.querySelector('#seat_number').required = false
+    document.querySelector('#record_year').required = false
+    document.querySelectorAll('.UniOnly').forEach((element)=>{
+        element.setAttribute('style', 'display: none;')
+    })
     document.getElementById("productid-input").value = productid;
     clearProductUI()
     document.querySelector('.footerMenu').classList.add('hidden')
-    changeContent('', 'boardServiceOrder');
+    changeContent('services', 'boardServiceOrder');
+    await fetchProduct(); // Default to Marks Certificate
+}
+
+
+async function selectBoardService(product) {
+    let productid = product; // Store serviceid globally
+    globalThis.productid = productid
+    document.querySelector('#class-name').required = true
+    document.querySelector('#group-select').required = true
+    document.querySelector('#seat_number').required = true
+    document.querySelector('#record_year').required = true
+    document.querySelectorAll('.UniOnly').forEach((element)=>{
+        element.setAttribute('style', '')
+    })
+    document.getElementById("productid-input").value = productid;
+    clearProductUI()
+    document.querySelector('.footerMenu').classList.add('hidden')
+    changeContent('services', 'boardServiceOrder');
     await fetchProduct(); // Default to Marks Certificate
 }
 
@@ -290,9 +315,9 @@ const nextFormContent2 = document.querySelector(".nextFormContent2");
 const nextFormContent3 = document.querySelector(".nextFormContent3");
 const screenshotFile = document.getElementById("screenshotFile");
 
-const classSelect = document.getElementById("class-name");
 const groupSelect = document.getElementById("group-select");
 
+const classSelect = document.getElementById("class-name");
 classSelect.addEventListener("change", () => {
     const val = classSelect.value;
     groupSelect.innerHTML = '<option value="default"></option>'
@@ -467,13 +492,6 @@ function saveOrderInfo(orderinfo) {
         orderCount = localStorage.getItem('orderCount')
     }
     localStorage.setItem(orderCount, orderinfo)
-    printOrders()
-}
-
-async function printOrders() {
-    for (let i = 1; i <= Number(orderCount); i++) {
-        console.log(localStorage.getItem(`${i}`))
-    }
 }
 
 function resetOffers() {

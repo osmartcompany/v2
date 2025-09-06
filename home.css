@@ -88,7 +88,10 @@
 }
 
 
-
+.cardsImage {
+    width: 100%;
+    height: 100%;
+}
 
 
 /* make  */
@@ -411,5 +414,22 @@
     img {
         width: 30px;
         height: 30px;
+    }
+}
+
+
+.animated-background {
+    width: 100%;
+    height: 100%;
+    /* background-color: black; */
+    animation: animate-background 1s linear infinite alternate;
+}
+
+@keyframes animate-background {
+    0% {
+        background-color: rgb(179, 179, 179);
+    }
+    100% {
+        background-color: rgb(88, 88, 88);
     }
 }

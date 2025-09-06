@@ -17,6 +17,7 @@
     <script src="script.js" defer></script>
     <script src="contentLoading.js" defer></script>
     <script src="cart.js" defer></script>
+    <script src="theme.js" defer></script>
 </head>
 
 <body>
@@ -67,13 +68,11 @@
                             </div>
                             <div class="specialOfferContent">
                                 <div class="specialOfferCards">
-                                    <div onclick="changeContent('services','selectUniversity')" class="offerCard ">
-                                        Card1
-                                    </div>
-                                    <div class="offerCard">Card 2</div>
-                                    <div class="offerCard">Card 3</div>
-                                    <div class="offerCard">Card 4</div>
-                                    <div class="offerCard">Card 5</div>
+                                    <div onclick="changeContent('services','selectUniversity')" class="offerCard animated-background"></div>
+                                    <div class="offerCard animated-background"></div>
+                                    <div class="offerCard animated-background"></div>
+                                    <div class="offerCard animated-background"></div>
+                                    <div class="offerCard animated-background"></div>
                                 </div>
                                 <div class="offerButtons">
                                     <input class="offerRadio" type="radio" name="offer" id="offer1" checked>
@@ -203,7 +202,7 @@
             <!-- Select Certificate Content -->
             <div class="selectCertificateContent universalContentSpace">
                 <div class="categoryHeader">
-                    <span>Select University</span>
+                    <span style="font-size: x-large; font-weight: 400;">Select University</span>
                 </div>
                 <div class="selectUniversity">
                     <div class="activeOutline">
@@ -354,7 +353,7 @@
                                 required />
                             <label for="customer" class="formLabel inputLabel">Full Name</label>
                         </div>
-                        <div class="wrapper">
+                        <div class="wrapper UniOnly">
                             <div class="inputField">
                                 <select name="class-name" class="formSelect" id="class-name" required>
                                     <option value="default"></option>
@@ -373,10 +372,10 @@
                                 <label for="group-select" class="formLabel selectLabel">Group</label>
                             </div>
                         </div>
-                        <div class="wrapper">
+                        <div class="wrapper UniOnly">
                             <div class="inputField">
                                 <input type="number" id="seat_number" class="form_input" name="seat_number"
-                                    placeholder=" " required />
+                                    placeholder=" " min="0" required />
                                 <label for="seat_number" class="formLabel inputLabel">Roll No.</label>
                             </div>
                             <div class="inputField">
@@ -386,7 +385,7 @@
                             </div>
                         </div>
                         <div class="inputField">
-                            <input type="number" id="phone" class="form_input" placeholder=" " name="phone" required />
+                            <input type="number" id="phone" class="form_input" placeholder=" " name="phone" min="0" required />
                             <label for="phone" class="formLabel inputLabel">Phone Number</label>
                         </div>
                         <h2>Delivery Address</h2>
@@ -548,7 +547,17 @@
             <div class="headTitle">Settings</div>
             <!-- Heading -->
             <!-- Container -->
-            <div class="universalContentSpace"></div>
+            <div class="universalContentSpace">
+                <div class="theme-switcher">
+                    <label for="theme-select">Choose a theme:</label>
+                    <select id="theme-select">
+                        <option value="system">System</option>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+
+            </div>
             <!-- Container -->
         </section>
     </div>
