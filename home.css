@@ -129,6 +129,10 @@
                 border-radius: 10px;
                 color: black;
                 flex-shrink: 0;
+                
+                .cardsImage {
+                    border-radius: 10px;
+                }
             }
         }
 
@@ -432,4 +436,5 @@
     100% {
         background-color: rgb(88, 88, 88);
     }
+
 }
