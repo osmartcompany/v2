@@ -588,6 +588,49 @@
         </div>
     </div>
     <!-- FooterMenu -->
+    
+    <a
+  href="https://wa.me/923035362222"
+  class="whatsapp-float"
+  data-bottom="50px"
+  data-right="25px"
+  aria-label="Chat with us on WhatsApp"
+        >
+  <img
+    src="assets 2/support.png"
+    alt="WhatsApp"
+  >
+</a>
+
+<script>
+  document.querySelectorAll(".whatsapp-float").forEach(button => {
+    button.style.bottom = button.dataset.bottom || "25px";
+    button.style.right = button.dataset.right || "25px";
+  });
+</script>
+
+<style>
+  .whatsapp-float {
+    position: fixed;
+    z-index: 9999;
+
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+  }
+
+  .whatsapp-float img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+</style>
 </body>
 
 </html>
