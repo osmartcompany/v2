@@ -6,8 +6,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+/*
+// navigation start
 let currentMenu = 'home';
-
 let runningSection = {
     home: 'main',
     services: 'main',
@@ -24,8 +25,8 @@ function changeContent(Menu, Section = '') {
         currentMenu = Menu
         document.querySelector(`.${currentMenu}`).classList.toggle('active');
         document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden')
-        let upperCase = Menu.charAt(0).toUpperCase() + Menu.replace(Menu.charAt(0), '')
-        document.title = `oSmart | ${upperCase}`
+        let upperCase = Menu.charAt(0).toUpperCase() + Menu.slice(1);
+        document.title = `oSmart | ${upperCase}`;
     }
     if (Section !== '') {
         document.querySelector(`.${`${currentMenu}-${runningSection[currentMenu]}`}`).classList.toggle('hidden')
@@ -38,7 +39,89 @@ function changeContent(Menu, Section = '') {
 function changeMenu(Menu) {
     currentMenu == Menu ? changeContent(Menu, 'main') : changeContent(Menu)
 }
+*/
 
+
+//AI
+
+// navigation start
+let currentMenu = 'home';
+
+let runningSection = {
+    home: 'main',
+    services: 'main',
+    activity: 'main'
+};
+
+// 1. Updated core navigation logic
+function changeContent(Menu, Section = '', isFromPopState = false) {
+    if (Menu !== '') {
+        document.querySelector(`.${currentMenu}`).classList.toggle('active');
+        document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden')
+
+        currentMenu = Menu
+        document.querySelector(`.${currentMenu}`).classList.toggle('active');
+        document.querySelector(`.${currentMenu}Menu`).classList.toggle('hidden')
+        let upperCase = Menu.charAt(0).toUpperCase() + Menu.slice(1);
+        document.title = `oSmart | ${upperCase}`;
+    }
+    if (Section !== '') {
+        document.querySelector(`.${`${currentMenu}-${runningSection[currentMenu]}`}`).classList.toggle('hidden')
+        runningSection[currentMenu] = Section
+        document.querySelector(`.${`${currentMenu}-${runningSection[currentMenu]}`}`).classList.toggle('hidden')
+    }
+    
+    // 2. Only push to history if navigation came from a user click, NOT the back button
+    if (!isFromPopState) {
+        //checks for userclick and forms new history
+        const urlHash = `#${currentMenu}/${runningSection[currentMenu]}`;
+        //if currentMenu and current section is services-boardServiceOrder then add hidden in Nav Menu
+        history.pushState({ menu: currentMenu, section: runningSection[currentMenu] }, '', urlHash);
+    }
+}
+
+// 3. Listen for the browser Back / Forward buttons
+window.addEventListener('popstate', (event) => {
+    if (event.state && event.state.menu) {
+        // Use the saved state from history
+        changeContent(event.state.menu, event.state.section, true);
+
+        //event.state.menu is currentMenu, and same for section which is runningsection[currentMeny]
+        //if currentMenu and current section is not services-boardServiceOrder then remove hidden in Nav Menu
+        //if currentMenu and current section is services-boardServiceOrder changeContent to main home
+
+    } else {
+        // Fallback if state is empty (e.g., user returns to initial landing URL)
+        parseUrlAndNavigate(true);
+    }
+});
+
+// 4. Helper function to read the URL structure (#menu/section)
+function parseUrlAndNavigate(isFromPopState = false) {
+    const hash = window.location.hash.substring(1); // remove '#'
+    if (hash) {
+        const [urlMenu, urlSection] = hash.split('/');
+        if (runningSection.hasOwnProperty(urlMenu)) {
+            changeContent(urlMenu, urlSection || '', isFromPopState);
+            return;
+        }
+    }
+    // Default fallback if URL is clean or broken
+    changeContent('home', 'main', isFromPopState);
+}
+
+// 5. Run on initial page load to handle bookmarks/refreshes
+window.addEventListener('DOMContentLoaded', () => {
+    // Parse URL on load to handle links like ://website.com
+    parseUrlAndNavigate(false);
+});
+
+function changeMenu(Menu) {
+    //currentMenu == Menu ? changeContent(Menu, 'main') : changeContent(Menu)
+    changeContent(Menu, 'main')
+}
+
+//AI
 
 
 
@@ -95,12 +178,12 @@ const searchLogo = document.querySelector('.searchLogo');
 
 
 // Na wanjae
-window.addEventListener('beforeunload', function (event) {
+//window.addEventListener('beforeunload', function (event) {
     // Prompt the user before leaving the page
-    event.preventDefault();
+    //event.preventDefault();
     // event.defaultPrevented
-    event.returnValue = ''; // Required for some browsers
-});
+    //event.returnValue = ''; // Required for some browsers
+//});
 
 
 
@@ -137,7 +220,7 @@ setInterval(() => {
             });
         }
     });
-}, 5000);
+}, 10000);
 
 
 
@@ -184,7 +267,7 @@ async function selectProductOrder(product) {
     document.querySelector('#group-select').required = false
     document.querySelector('#seat_number').required = false
     document.querySelector('#record_year').required = false
-    document.querySelectorAll('.UniOnly').forEach((element)=>{
+    document.querySelectorAll('.UniOnly').forEach((element) => {
         element.setAttribute('style', 'display: none;')
     })
     document.getElementById("productid-input").value = productid;
@@ -202,7 +285,7 @@ async function selectBoardService(product) {
     document.querySelector('#group-select').required = true
     document.querySelector('#seat_number').required = true
     document.querySelector('#record_year').required = true
-    document.querySelectorAll('.UniOnly').forEach((element)=>{
+    document.querySelectorAll('.UniOnly').forEach((element) => {
         element.setAttribute('style', '')
     })
     document.getElementById("productid-input").value = productid;
@@ -251,7 +334,7 @@ async function loadServicePrice() {
                     const priceEl = document.getElementById("price-" + serviceOption);
                     const linkEl = priceEl.parentElement;
 
-                    priceEl.textContent = `Rs. ${data[serviceOption.replace(/_/g, ' ')].selling_price}`;
+                    priceEl.textContent = `Rs. ${data[serviceOption.replace(/_/g, ' ')].selling_price} + 500 (Delivery Charges)`; //Edited
                     linkEl.setAttribute('onclick', `selectBoardService('${data[serviceOption.replace(/_/g, ' ')].productid}')`);
                 } else {
                     document.getElementById("price-" + serviceOption).textContent = "Not found";
@@ -264,6 +347,33 @@ async function loadServicePrice() {
         console.error('Error fetching document:', error);
     });
 }
+
+
+
+// Fix | Prices was not showing due to lack of function calls
+window.addEventListener("DOMContentLoaded", checkURLHash);
+function checkURLHash() {
+    
+    if (window.location.hash === "#services/selectBoardService") {
+        history.go(-2);
+    }
+    if (window.location.hash === "#services/boardServiceOrder") {
+        // make them go to service main then home main
+        changeContent("","main")
+        changeContent("home","main")
+    }
+}
+
+window.addEventListener("popstate", checkURLHash2);
+function checkURLHash2() {
+    const targetHash = "#services/boardServiceOrder"; // Replace with your target value
+    
+    if (window.location.hash !== targetHash) {
+        console.log('Fired!');
+        document.querySelector('.footerMenu').classList.remove('hidden');
+    }
+}
+
 
 // async function blabla() {
 //     // const temp = db.collection('products').doc("certificates").collection('list').doc(category).get()
@@ -390,11 +500,14 @@ function disableNextFormContent3() {
     nextFormContent3.setAttribute('style', "cursor: not-allowed; opacity: 0.5;");
 }
 
+//runs validation if new things is inputted
 document.getElementById("order-form").addEventListener("input", validateForm1);
 function validateForm1() {
+    //takes form and check whether all required filled or not
     const form = document.getElementById("order-form");
     const fields = [...form.elements].filter(el => el.hasAttribute("required"));
     const filled = fields.every(el => el.value.trim() !== "");
+    //if filled then ir enables Next button or disables if not
     if (filled && currentProduct?.selling_price) {
         enableNextFormContent1()
     } else {
@@ -403,11 +516,14 @@ function validateForm1() {
 }
 
 
-
+//runs validation if new thing is inputted
+document.getElementById("order-form").addEventListener("input", validateForm2);
 function validateForm2() {
+    //takes form and check whether all required filled or not
     const form = document.getElementById("order-form");
     const fields = [...form.elements].filter(el => el.hasAttribute("required"));
     const filled = fields.every(el => el.value.trim() !== "");
+    //if filled then ir enables Next button or disables if not
     if (filled && currentProduct?.selling_price) {
         enableNextFormContent2()
     } else {
@@ -415,13 +531,13 @@ function validateForm2() {
     }
 }
 
-document.getElementById("order-form").addEventListener("input", validateForm2);
 
 
 
 screenshotFile.addEventListener('change', (event) => {
     const selectedFiles = event.target.files;
 
+    //if image is selected then enable Next button
     if (selectedFiles.length > 0) {
         enableNextFormContent3()
     } else {
@@ -473,7 +589,11 @@ payButton.addEventListener("click", async () => {
         clearTimeout(timeout);
         // where to go after submitting form
         overlay.classList.add("hidden");
+
+        //resets form
         resetOffers()
+
+        //starts loading cart
         loadOrders()
     } catch (e) {
         console.error(e);
@@ -494,10 +614,10 @@ function saveOrderInfo(orderinfo) {
     localStorage.setItem(orderCount, orderinfo)
 }
 
-function resetOffers() {
-    changeView('.paymentConfirmation', '.orderInfo')
-    changeContent('', 'boardOrderSuccess')
-    document.querySelector('.footerMenu').classList.remove('hidden')
+function resetForm(){
+    document.querySelector('.paymentConfirmation').classList.add('hidden')
+    document.querySelector('.payment').classList.add('hidden')
+    document.querySelector('.orderInfo').classList.remove('hidden')
     document.querySelectorAll('.step')[0].classList.remove('completed')
     document.querySelectorAll('.step')[1].classList.remove('completed')
     document.querySelectorAll('.step')[2].classList.remove('current')
@@ -507,7 +627,12 @@ function resetOffers() {
     document.getElementById('accountTypeFrom').required = false
     document.getElementById('accountNumber').required = false
     document.getElementById("screenshotFile").value = null;
+}
 
+function resetOffers() {
+    changeContent('', 'boardOrderSuccess')
+    document.querySelector('.footerMenu').classList.remove('hidden')
+    resetForm()
 }
 
 function changeView(Hide, Show) {

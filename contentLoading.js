@@ -86,15 +86,16 @@ async function loadProducts() {
 }
 
 // for loading home
-loadProducts();
+window.addEventListener('DOMContentLoaded', loadProducts)
 
 
 async function openCategory(categoryName) {
     if (homeLoaded) { //after home content loaded
-        changeView('.homeScreen', `.home-main-${categoryName}`)
+        //changeView('.homeScreen', `.home-main-${categoryName}`)
         grid = document.querySelector(`.${categoryName}-content`)
         type = categoryName
         loadProducts()
+        changeContent("", `${categoryName}`)
     }
 }
 

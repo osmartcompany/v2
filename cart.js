@@ -1,6 +1,8 @@
+//DeliveryRange
 const orderRange1 = 3;
 const orderRange2 = 5;
 
+//Order Box in Orders
 function addOrderCard({ title, price, date, deliveryRange, status, image, orderid }) {
   const container = document.getElementById("orders-container");
   const card = document.createElement("article");
@@ -35,7 +37,8 @@ async function loadOrders() {
     // First check which collection this order is in
     let orderDoc = null;
     let state = "";
-
+    
+    //see location of order, and then its data in orderDoc
     const collections = ["completed orders", "pending orders", "new orders"];
     for (const col of collections) {
       const doc = await db.collection("orders").doc(col).collection("list").doc(orderId).get();

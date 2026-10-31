@@ -1,44 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const themeSelect = document.getElementById('theme-select');
+    const themeBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
     const htmlElement = document.documentElement;
     const localStorageKey = 'theme';
 
-    // Function to apply the selected theme
+    // Image paths
+    //const SUN_ICON = 'path/to/sun.png';   // Image shown when current theme is DARK (click to switch to light)
+    //const MOON_ICON = 'path/to/moon.png'; // Image shown when current theme is LIGHT (click to switch to dark)
+    
+    const SUN_ICON = 'assets/sun.png';   // Image shown when current theme is DARK (click to switch to light)
+    const MOON_ICON = 'assets/moon.png'; // Image shown when current theme is LIGHT (click to switch to dark)
+
+    // Helper: Determine the active theme state ('dark' or 'light')
+    function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // Update DOM attribute, image icon, and localStorage
     function applyTheme(theme) {
-        if (theme === 'system') {
-            htmlElement.removeAttribute('data-theme');
-            localStorage.removeItem(localStorageKey);
+        htmlElement.setAttribute('data-theme', theme);
+        localStorage.setItem(localStorageKey, theme);
+
+        if (theme === 'dark') {
+            themeIcon.src = SUN_ICON;
+            themeIcon.alt = 'Switch to Light Mode';
         } else {
-            htmlElement.setAttribute('data-theme', theme);
-            localStorage.setItem(localStorageKey, theme);
+            themeIcon.src = MOON_ICON;
+            themeIcon.alt = 'Switch to Dark Mode';
         }
     }
 
-    // Load theme on page load
-    const savedTheme = localStorage.getItem(localStorageKey);
-    if (savedTheme) {
-        applyTheme(savedTheme);
-        themeSelect.value = savedTheme;
-    } else {
-        // If no preference saved, set 'system' as the default
-        themeSelect.value = 'system';
+    // 1. Initial Load: Check localStorage first, otherwise fallback to system preference
+    let currentTheme = localStorage.getItem(localStorageKey);
+
+    if (!currentTheme) {
+        currentTheme = getSystemTheme();
     }
 
-    // Listen for changes from the theme selector
-    themeSelect.addEventListener('change', (event) => {
-        applyTheme(event.target.value);
+    applyTheme(currentTheme);
+
+    // 2. Click Handler: Toggle between light and dark
+    themeBtn.addEventListener('click', () => {
+        const activeTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
     });
 
-    // Listen for system color scheme changes to update the selector
-    // but only when the "System" option is active.
-    window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .addEventListener('change', (e) => {
-            if (!localStorage.getItem(localStorageKey)) {
-                // If theme is not explicitly set (i.e., 'system' is active),
-                // let the CSS media query handle the theme change.
-                // We don't need to do anything here, but could update UI if needed.
-                console.log(`System theme changed. New preference is: ${e.matches ? 'dark' : 'light'}`);
-            }
-        });
+    // 3. React to OS system theme changes IF user hasn't explicitly set a preference before page load
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem(localStorageKey)) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
 });
