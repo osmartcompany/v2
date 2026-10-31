@@ -23,8 +23,10 @@
 <body>
     <!-- Loader -->
     <div id="loading-screen">
-        <div class="loader"></div>
-        <div class="gradient-image"></div>
+        <div class="pulse-opacity">
+            <img src="assets 2/logo.png" alt="logo" width="300px">
+            <span>Loading...</span>
+        </div>
     </div>
 
     <!-- ✅ Toast Notification -->
@@ -39,7 +41,9 @@
                 <div class="headerRow1">
                     <div class="heading">Home</div>
                     <div class="notification">
-                        <div class="red"><img src="assets/notification.png" alt="Logo"></div>
+                        <div class="red" id="theme-toggle" type="button" aria-label="Toggle Theme">
+                            <img id="theme-icon" src="" alt="Theme toggle icon" width="24" height="24" />
+                        </div>
                     </div>
                 </div>
                 <div class="headerRow2">
@@ -48,119 +52,137 @@
                         <input id="search-input" type="text" placeholder="Search" oninput="searchProducts()"
                             onblur="restoreSearch()" />
                     </div>
-                    <span class="filter">
-                        <img src="assets/filter.png" alt="Filter Icon" />
-                    </span>
                 </div>
             </div>
             <!-- Heading -->
 
             <!-- Container -->
             <div class="universalContentSpace">
-                <div class="homeScreen">
-                    <!-- Contents -->
-                    <div class="homeContainer">
-                        <!-- Special Offers -->
-                        <div class="specialOffers">
-                            <div class="specialOfferHeader">
-                                <span>#SpecialForYou</span>
-                                <span style="color: var(--primary-color); font-size: small;">See all</span>
+                <!-- Contents -->
+                <div class="homeContainer">
+                    <!-- Special Offers -->
+                    <div class="specialOffers">
+                        <div class="specialOfferHeader">
+                            <span>#SpecialForYou</span>
+                            <span style="color: var(--primary-color); font-size: small;">See all</span>
+                        </div>
+                        <div class="specialOfferContent">
+                            <div class="specialOfferCards">
+                                <div onclick="changeContent('services','selectUniversity')"
+                                    class="offerCard animated-background"></div>
+                                <div class="offerCard animated-background"></div>
+                                <div class="offerCard animated-background"></div>
+                                <div class="offerCard animated-background"></div>
+                                <div class="offerCard animated-background"></div>
                             </div>
-                            <div class="specialOfferContent">
-                                <div class="specialOfferCards">
-                                    <div onclick="changeContent('services','selectUniversity')" class="offerCard animated-background"></div>
-                                    <div class="offerCard animated-background"></div>
-                                    <div class="offerCard animated-background"></div>
-                                    <div class="offerCard animated-background"></div>
-                                    <div class="offerCard animated-background"></div>
-                                </div>
-                                <div class="offerButtons">
-                                    <input class="offerRadio" type="radio" name="offer" id="offer1" checked>
-                                    <input class="offerRadio" type="radio" name="offer" id="offer2">
-                                    <input class="offerRadio" type="radio" name="offer" id="offer3">
-                                    <input class="offerRadio" type="radio" name="offer" id="offer4">
-                                    <input class="offerRadio" type="radio" name="offer" id="offer5">
-                                </div>
+                            <div class="offerButtons">
+                                <input class="offerRadio" type="radio" name="offer" id="offer1" checked>
+                                <input class="offerRadio" type="radio" name="offer" id="offer2">
+                                <input class="offerRadio" type="radio" name="offer" id="offer3">
+                                <input class="offerRadio" type="radio" name="offer" id="offer4">
+                                <input class="offerRadio" type="radio" name="offer" id="offer5">
                             </div>
                         </div>
-                        <!-- Special Offers -->
-                        <!-- Category -->
-                        <div class="category">
-                            <div class="categoryHeader">
-                                <span>Category</span>
-                                <span style="color: var(--primary-color); font-size: small;">See All</span>
-                            </div>
-                            <div class="categoryContent">
-                                <div class="categoryButton" onclick="openCategory('Cloths')">
-                                    <div class="categoryImageContainer">
-                                        <img class="categoryImage red" src="assets/clothes.png" alt="Category 1">
-                                    </div>
-                                    <div class="categoryTitle">Cloths</div>
-                                </div>
-                                <div class="categoryButton" onclick="openCategory('Electronics')">
-                                    <div class="categoryImageContainer">
-                                        <img class="categoryImage red" src="assets/electronics.png" alt="Category 2">
-                                    </div>
-                                    <div class="categoryTitle">Electronics</div>
-                                </div>
-                                <div class="categoryButton" onclick="openCategory('Shoes')">
-                                    <div class="categoryImageContainer">
-                                        <img class="categoryImage red" src="assets/shoes.png" alt="Category 3">
-                                    </div>
-                                    <div class="categoryTitle">Shoes</div>
-                                </div>
-                                <div class="categoryButton" onclick="openCategory('Books')">
-                                    <div class="categoryImageContainer">
-                                        <img class="categoryImage red" src="assets/9grid.png" alt="Category 4">
-                                    </div>
-                                    <div class="categoryTitle">Books</div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Category -->
                     </div>
-                    <!-- Contents -->
-                    <!-- Flash Sales -->
-                    <div class="flashSales">
-                        <div class="flashSalesHeader">
-                            <span>Flash Sales</span>
+                    <!-- Special Offers -->
+                    <!-- Category -->
+                    <div class="category">
+                        <div class="categoryHeader">
+                            <span>Category</span>
                             <span style="color: var(--primary-color); font-size: small;">See All</span>
                         </div>
-                        <div class="flashSalesContent">
-                            <div id="product-grid"></div>
+                        <div class="categoryContent">
+                            <div class="categoryButton" onclick="openCategory('Cloths')">
+                                <div class="categoryImageContainer">
+                                    <img class="categoryImage red" src="assets 2/cert.png" alt="Category 1">
+                                </div>
+                                <div class="categoryTitle">Bill Payment</div>
+                            </div>
+                            <div class="categoryButton" onclick="openCategory('Electronics')">
+                                <div class="categoryImageContainer">
+                                    <img class="categoryImage red" src="assets/electronics.png" alt="Category 2">
+                                </div>
+                                <div class="categoryTitle">Study</div>
+                            </div>
+                            <div class="categoryButton" onclick="openCategory('Shoes')">
+                                <div class="categoryImageContainer">
+                                    <img class="categoryImage red" src="assets/shoes.png" alt="Category 3">
+                                </div>
+                                <div class="categoryTitle">Shoes</div>
+                            </div>
+                            <div class="categoryButton" onclick="openCategory('Books')">
+                                <div class="categoryImageContainer">
+                                    <img class="categoryImage red" src="assets 2/book.png" alt="Category 4">
+                                </div>
+                                <div class="categoryTitle">Books</div>
+                            </div>
                         </div>
                     </div>
-                    <!-- Flash Sales -->
+                    <!-- Category -->
                 </div>
-
-                <!-- Category Cloths -->
-                <div class="home-main-Cloths hidden">
-                    <div onclick="changeView('.home-main-Cloths','.homeScreen')">Back</div>
-                    <div class="Cloths-content categoryContent"></div>
+                <!-- Contents -->
+                <!-- Flash Sales -->
+                <div class="flashSales">
+                    <div class="flashSalesHeader">
+                        <span>Flash Sales</span>
+                        <span style="color: var(--primary-color); font-size: small;">See All</span>
+                    </div>
+                    <div class="flashSalesContent">
+                        <div id="product-grid"></div>
+                    </div>
                 </div>
-                <!-- Category Cloths -->
-                <!-- Category Cloths -->
-                <div class="home-main-Electronics hidden">
-                    <div onclick="changeView('.home-main-Electronics','.homeScreen')">Back</div>
-                    <div class="Electronics-content categoryContent"></div>
-                </div>
-                <!-- Category Cloths -->
-                <!-- Category Cloths -->
-                <div class="home-main-Shoes hidden">
-                    <div onclick="changeView('.home-main-Shoes','.homeScreen')">Back</div>
-                    <div class="Shoes-content categoryContent"></div>
-                </div>
-                <!-- Category Cloths -->
-                <!-- Category Cloths -->
-                <div class="home-main-Books hidden">
-                    <div onclick="changeView('.home-main-Books','.homeScreen')">Back</div>
-                    <div class="Books-content categoryContent"></div>
-                </div>
-                <!-- Category Cloths -->
+                <!-- Flash Sales -->
             </div>
             <!-- Container -->
         </section>
         <!-- Home Main -->
+
+        <section>
+            <!-- Category Cloths -->
+            <div class="home-Cloths universalSpace hidden">
+                <!-- Heading -->
+                <div class="headTitle">Cloths</div>
+                <!-- Heading -->
+
+                <div class="universalContentSpace">
+                    <div class="Cloths-content categoryContent"></div>
+                </div>
+            </div>
+            <!-- Category Cloths -->
+            <!-- Category Electronics -->
+            <div class="home-Electronics universalSpace hidden">
+                <!-- Heading -->
+                <div class="headTitle">Electronics</div>
+                <!-- Heading -->
+
+                <div class="universalContentSpace">
+                    <div class="Electronics-content categoryContent"></div>
+                </div>
+            </div>
+            <!-- Category Electronics -->
+            <!-- Category Shoes -->
+            <div class="home-Shoes universalSpace hidden">
+                <!-- Heading -->
+                <div class="headTitle">Shoes</div>
+                <!-- Heading -->
+
+                <div class="universalContentSpace">
+                    <div class="Shoes-content categoryContent"></div>
+                </div>
+            </div>
+            <!-- Category Shoes -->
+            <!-- Category Books -->
+            <div class="home-Books universalSpace hidden">
+                <!-- Heading -->
+                <div class="headTitle">Books</div>
+                <!-- Heading -->
+
+                <div class="universalContentSpace">
+                    <div class="Books-content categoryContent"></div>
+                </div>
+            </div>
+            <!-- Category Books -->
+        </section>
 
         <!-- Separator -->
         <div class="separator"></div>
@@ -215,8 +237,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="activeOutline">
-                        <div onclick="selectUniversity('BISES')" class="universityContent">
+                    <div class="activeOutline">
+                        <div onclick="selectUniversity('BISES')" class="universityContent universityContentDisabled">
                             <div class="universityImage">
                                 <img src="assets 2/bises.png" alt="BISES">
                             </div>
@@ -226,7 +248,7 @@
                         </div>
                     </div>
                     <div class="activeOutline">
-                        <div onclick="selectUniversity('BISEK')" class="universityContent">
+                        <div onclick="selectUniversity('BISEK')" class="universityContent universityContentDisabled">
                             <div class="universityImage">
                                 <img src="assets 2/bisek.png" alt="BISEK">
                             </div>
@@ -236,7 +258,7 @@
                         </div>
                     </div>
                     <div class="activeOutline">
-                        <div onclick="selectUniversity('BISEL')" class="universityContent">
+                        <div onclick="selectUniversity('BISEL')" class="universityContent universityContentDisabled">
                             <div class="universityImage">
                                 <img src="assets 2/bisel.png" alt="BISEL">
                             </div>
@@ -246,7 +268,7 @@
                         </div>
                     </div>
                     <div class="activeOutline">
-                        <div onclick="selectUniversity('BISEN')" class="universityContent">
+                        <div onclick="selectUniversity('BISEN')" class="universityContent universityContentDisabled">
                             <div class="universityImage">
                                 <img src="assets 2/bisen.png" alt="BISEN">
                             </div>
@@ -254,7 +276,7 @@
                                 Board Shaheed Benazirabad
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <!-- Select Certificate Content -->
@@ -270,40 +292,44 @@
             <!-- Container -->
             <div class="boardServiceContent universalContentSpace">
                 <div class="boardServiceOption">
+                    <span>Service</span>
+                    <span>Price</span>
+                </div>
+                <div class="boardServiceOption">
                     <span>Marks Certificate</span>
-                    <span class="boardServicePrice" id="price-Marks_Certificate"></span>
+                    <span class="boardServicePrice" id="price-Marks_Certificate">Loading...</span>
                 </div>
                 <div class="boardServiceOption">
                     <span>Pass Certificate</span>
-                    <span class="boardServicePrice" id="price-Pass_Certificate"></span>
+                    <span class="boardServicePrice" id="price-Pass_Certificate">Loading...</span>
                 </div>
                 <div class="boardServiceOption">
                     <span>Creation Pakka Certificate</span>
-                    <span class="boardServicePrice" id="price-Creation_Pakka_Certificate"></span>
+                    <span class="boardServicePrice" id="price-Creation_Pakka_Certificate">Loading...</span>
                 </div>
                 <div class="boardServiceOption">
                     <span>Duplicate Pakka Certificate</span>
-                    <span class="boardServicePrice" id="price-Duplicate_Pakka_Certificate"></span>
+                    <span class="boardServicePrice" id="price-Duplicate_Pakka_Certificate">Loading...</span>
                 </div>
                 <div class="boardServiceOption">
                     <span>Migration</span>
-                    <span class="boardServicePrice" id="price-Migration"></span>
+                    <span class="boardServicePrice" id="price-Migration">Loading...</span>
                 </div>
                 <div class="boardServiceOption">
                     <span>Eligibility Certificate</span>
-                    <span class="boardServicePrice" id="price-Eligibility_Certificate"></span>
+                    <span class="boardServicePrice" id="price-Eligibility_Certificate">Loading...</span>
                 </div>
                 <div class="boardServiceOption">
                     <span>Eligibility (Other Province)</span>
-                    <span class="boardServicePrice" id="price-Eligibility_Other_Province"></span>
+                    <span class="boardServicePrice" id="price-Eligibility_Other_Province">Loading...</span>
                 </div>
                 <div class="boardServiceOption">
                     <span>Date of Birth Certificate</span>
-                    <span class="boardServicePrice" id="price-DOB_Certificate"></span>
+                    <span class="boardServicePrice" id="price-DOB_Certificate">Loading...</span>
                 </div>
                 <div class="boardServiceOption">
                     <span>Certificate Verification</span>
-                    <span class="boardServicePrice" id="price-Verification"></span>
+                    <span class="boardServicePrice" id="price-Verification">Loading...</span>
                 </div>
             </div>
             <!-- Container -->
@@ -385,7 +411,8 @@
                             </div>
                         </div>
                         <div class="inputField">
-                            <input type="number" id="phone" class="form_input" placeholder=" " name="phone" min="0" required />
+                            <input type="number" id="phone" class="form_input" placeholder=" " name="phone" min="0"
+                                required />
                             <label for="phone" class="formLabel inputLabel">Phone Number</label>
                         </div>
                         <h2>Delivery Address</h2>
@@ -524,11 +551,11 @@
     </div>
     <!-- Services -->
 
-    <!-- Activity -->
+    <!-- Orders (Formerly Activity) -->
     <div class="activityMenu hidden">
         <section class="activity-main universalSpace">
             <!-- Heading -->
-            <div class="headTitle">Activity</div>
+            <div class="headTitle">Orders</div>
             <!-- Heading -->
 
             <!-- Container -->
@@ -538,31 +565,7 @@
             <!-- Container -->
         </section>
     </div>
-    <!-- Activity -->
-
-    <!-- Settings -->
-    <div class="settingsMenu hidden">
-        <section class="settings-main universalSpace">
-            <!-- Heading -->
-            <div class="headTitle">Settings</div>
-            <!-- Heading -->
-            <!-- Container -->
-            <div class="universalContentSpace">
-                <div class="theme-switcher">
-                    <label for="theme-select">Choose a theme:</label>
-                    <select id="theme-select">
-                        <option value="system">System</option>
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                    </select>
-                </div>
-
-            </div>
-            <!-- Container -->
-        </section>
-    </div>
-    <!-- Settings -->
-
+    <!-- Orders -->
 
     <!-- Separator -->
     <div class="separator"></div>
@@ -580,61 +583,29 @@
         </div>
         <div onclick="changeMenu('activity')" class="activity">
             <img src="assets/activity.png" alt="Activity Icon">
-            <div>Activity</div>
-        </div>
-        <div onclick="changeMenu('settings')" class="settings">
-            <img src="assets/user.png" alt="User Icon">
-            <div>Settings</div>
+            <div>Orders</div>
         </div>
     </div>
     <!-- FooterMenu -->
-    
-    <a
-  href="https://wa.me/923035362222"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="whatsapp-float"
-  data-bottom="110px"
-  data-right="25px"
-  aria-label="Chat with us on WhatsApp"
-        >
-  <img
-    src="assets 2/support.png"
-    alt="WhatsApp"
-  >
-</a>
 
-<script>
-  document.querySelectorAll(".whatsapp-float").forEach(button => {
-    button.style.bottom = button.dataset.bottom || "25px";
-    button.style.right = button.dataset.right || "25px";
-  });
-</script>
-
-<style>
-  .whatsapp-float {
+    <!-- Support -->
+    <div class="supportContainer" style="
     position: fixed;
     z-index: 1000;
-
     width: 60px;
     height: 60px;
-    background-color: var(--primary-color);
-    border-radius: 500px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-decoration: none;
-  }
-
-  .whatsapp-float img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-</style>
+    bottom:  110px;
+    right: 25px;
+    ">
+        <a href="https://wa.me/923035362222" target="_blank" rel="noopener noreferrer" class="whatsappFloat"
+            aria-label="Chat with us on WhatsApp">
+            <img src="assets 2/support.png" alt="WhatsApp">
+        </a>
+        <p style="color: #c7c7c7;">
+            Helpline
+        </p>
+    </div>
+    <!-- Support -->
 </body>
 
 </html>
